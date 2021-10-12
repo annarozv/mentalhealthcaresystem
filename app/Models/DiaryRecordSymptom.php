@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DiaryRecordSymptom extends Model
 {
@@ -22,10 +23,16 @@ class DiaryRecordSymptom extends Model
         'symptom_id'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function record() {
         return $this->belongsTo('App\Models\DiaryRecord');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function symptom() {
         return $this->belongsTo('App\Models\Symptom');
     }
