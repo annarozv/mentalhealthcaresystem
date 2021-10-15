@@ -33,11 +33,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li><a class="nav-link" href="{{ route('illness.all') }}">{{ __('messages.illnesses_title') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('symptom.all') }}">{{ __('messages.symptoms_link') }}</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <!-- Language Switch Links -->
+                        <li><a class="nav-link" href="/lang/lv">LV</a></li>
+                        <li><a class="nav-link" href="/lang/en">EN</a></li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
