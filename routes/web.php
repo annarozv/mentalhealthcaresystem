@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IllnessController;
 use App\Http\Controllers\SymptomController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +25,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// route for language switching
+// Route for language switching
 Route::get('lang/{locale}', function ($locale) {
     app()->setLocale($locale);
     session()->put('locale', $locale);
@@ -30,7 +33,11 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 });
 
-Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('home', [HomeController::class, 'index'])->name('home');
+
+// User related routes
+Route::get('profile', [HomeController::class, 'profile'])->name('profile');
+Route::post('user/{id}/deactivate', [UserController::class, 'deactivate'])->name('user.deactivate');
 
 // Routes for illnesses
 Route::get('illnesses', [IllnessController::class, 'index'])->name('illness.all');
