@@ -16,12 +16,12 @@ class RequestTypeSeeder extends Seeder
     {
         RequestType::truncate();
         RequestType::create(array(
-            'type_name' => 'Connection',
-            'type_name_lv' => 'Sadarbība'
+            'type' => 'Connection',
+            'type_lv' => 'Sadarbība'
         ));
         RequestType::create(array(
-            'type_name' => 'Feedback',
-            'type_name_lv' => 'Atgriezeniskā saite'
+            'type' => 'Feedback',
+            'type_lv' => 'Atgriezeniskā saite'
         ));
     }
 }

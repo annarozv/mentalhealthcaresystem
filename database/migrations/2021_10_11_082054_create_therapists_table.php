@@ -16,7 +16,8 @@ class CreateTherapistsTable extends Migration
         Schema::create('therapists', function (Blueprint $table) {
             $table->id();
             $table->date('date_of_birth')->nullable();
-            $table->string('gender', 10)->nullable();
+            $table->unsignedBigInteger('gender_id');
+            $table->foreign('gender_id')->references('id')->on('genders');
             $table->string('profile_picture', 255)->nullable();
             $table->text('specialization');
             $table->text('education_information');

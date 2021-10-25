@@ -16,20 +16,20 @@ class RoleSeeder extends Seeder
     {
         Role::truncate();
         Role::create(array(
-            'role_name' => 'Administrator',
-            'role_name_lv' => 'Administrators'
+            'role' => 'Administrator',
+            'role_lv' => 'Administrators'
         ));
         Role::create(array(
-            'role_name' => 'Moderator',
-            'role_name_lv' => 'Moderators'
+            'role' => 'Moderator',
+            'role_lv' => 'Moderators'
         ));
         Role::create(array(
-            'role_name' => 'Therapist',
-            'role_name_lv' => 'Terapeits'
+            'role' => 'Therapist',
+            'role_lv' => 'Terapeits'
         ));
         Role::create(array(
-            'role_name' => 'Patient',
-            'role_name_lv' => 'Pacients'
+            'role' => 'Patient',
+            'role_lv' => 'Pacients'
         ));
     }
 }
