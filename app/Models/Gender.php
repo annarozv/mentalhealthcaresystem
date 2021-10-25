@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Role extends Model
+class Gender extends Model
 {
     use HasFactory;
 
@@ -14,14 +14,21 @@ class Role extends Model
      * @var string[]
      */
     protected $fillable = [
-        'role',
-        'role_lv'
+        'gender',
+        'gender_lv'
     ];
 
     /**
      * @return HasMany
      */
-    public function users() {
-        return $this->hasMany('App\Models\User');
+    public function patients() {
+        return $this->hasMany('App\Models\Patient');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function therapists() {
+        return $this->hasMany('App\Models\Therapists');
     }
 }

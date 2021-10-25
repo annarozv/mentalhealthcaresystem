@@ -15,8 +15,8 @@ class CreateRequestTypesTable extends Migration
     {
         Schema::create('request_types', function (Blueprint $table) {
             $table->id();
-            $table->string('type_name', 255)->unique();
-            $table->string('type_name_lv', 255)->unique();
+            $table->string('type', 255)->unique();
+            $table->string('type_lv', 255)->unique();
             $table->timestamps();
         });
     }

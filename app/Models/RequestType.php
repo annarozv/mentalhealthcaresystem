@@ -14,8 +14,8 @@ class RequestType extends Model
      * @var string[]
      */
     protected $fillable = [
-        'type_name',
-        'type_name_lv'
+        'type',
+        'type_lv'
     ];
 
     /**

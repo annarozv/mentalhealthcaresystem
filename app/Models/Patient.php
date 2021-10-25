@@ -16,7 +16,7 @@ class Patient extends Model
      */
     protected $fillable = [
         'date_of_birth',
-        'gender',
+        'gender_id',
         'profile_picture',
         'additional_information',
         'user_id',
@@ -28,6 +28,13 @@ class Patient extends Model
      */
     public function user() {
         return $this->belongsTo('App\Models\User');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function gender() {
+        return $this->belongsTo('App\Models\Gender');
     }
 
     /**
