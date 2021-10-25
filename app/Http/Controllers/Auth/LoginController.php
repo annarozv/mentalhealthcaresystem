@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +41,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Function that will logout the deactivated user on login attempt
+     *
+     * @param Request $request
+     * @param $user
+     * @return Application|RedirectResponse|Redirector|void
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if (!$user->is_active) {
+            Auth::logout();
+
+            return redirect('login')->withErrors(['deactivated' => __('auth.deactivated')]);
+        }
     }
 }
