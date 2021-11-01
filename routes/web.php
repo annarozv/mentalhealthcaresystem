@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IllnessController;
 use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PatientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,14 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 // User related routes
 Route::get('profile', [HomeController::class, 'profile'])->name('profile');
 Route::post('user/{id}/deactivate', [UserController::class, 'deactivate'])->name('user.deactivate');
+
+// Patient routes
+Route::get('patient/{id}/info', [PatientController::class, 'show']);
+Route::get('patient/new', [PatientController::class, 'create']);
+Route::post('patient/store', [PatientController::class, 'store'])->name('patient.store');
+Route::get('patient/edit', [PatientController::class, 'edit']);
+Route::post('patient/{id}/update', [PatientController::class, 'update'])->name('patient.update');
+Route::post('patient/{id}/remove', [PatientController::class, 'destroy'])->name('patient.remove');
 
 // Routes for illnesses
 Route::get('illnesses', [IllnessController::class, 'index'])->name('illness.all');

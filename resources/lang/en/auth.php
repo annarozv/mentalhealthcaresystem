@@ -32,6 +32,8 @@ return [
     'pass' => 'Password',
     'pass_confirm' => 'Confirm Password',
     'role' => 'Your Role',
+    'public_info' => 'See my public information',
+    'create_public_info' => 'Add public information',
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',

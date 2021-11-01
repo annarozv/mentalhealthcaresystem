@@ -32,5 +32,12 @@ return [
     'add_symptoms_to_illness' => 'Add selected symptoms to the illness',
     'create_symptom' => 'Create new symptom',
     'update_symptom' => 'Update symptom information',
-    'search' => 'Search'
+    'search' => 'Search',
+    'save_info' => 'Save Information',
+    'date_of_birth' => 'Date of birth',
+    'gender' => 'Gender',
+    'new' => 'New',
+    'remove_profile_pic' => 'Remove my profile picture',
+    'additional_information' => 'Additional Information',
+    'profile_picture' => 'Profile Picture'
 ];

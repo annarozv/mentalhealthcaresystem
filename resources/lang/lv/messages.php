@@ -32,5 +32,12 @@ return [
     'add_symptoms_to_illness' => 'Pievienot slimībai izvēlētus simptomus',
     'create_symptom' => 'Izveidot jaunu simptomu',
     'update_symptom' => 'Atjaunot simptoma informāciju',
-    'search' => 'Meklēt'
+    'search' => 'Meklēt',
+    'save_info' => 'Saglabāt Informāciju',
+    'date_of_birth' => 'Dzimšanas Datums',
+    'gender' => 'Dzimums',
+    'new' => 'Jauna',
+    'remove_profile_pic' => 'Dzēst profila bildi',
+    'additional_information' => 'Papildus Informācija',
+    'profile_picture' => 'Profila Bilde'
 ];

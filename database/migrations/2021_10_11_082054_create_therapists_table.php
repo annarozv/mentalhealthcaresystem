@@ -18,7 +18,7 @@ class CreateTherapistsTable extends Migration
             $table->date('date_of_birth')->nullable();
             $table->unsignedBigInteger('gender_id');
             $table->foreign('gender_id')->references('id')->on('genders');
-            $table->string('profile_picture', 255)->nullable();
+            $table->string('profile_picture', 255)->default('default_profile_picture.jpg');
             $table->text('specialization');
             $table->text('education_information');
             $table->string('education_document', 255);

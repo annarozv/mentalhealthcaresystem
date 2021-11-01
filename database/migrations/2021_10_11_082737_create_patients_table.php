@@ -18,7 +18,7 @@ class CreatePatientsTable extends Migration
             $table->date('date_of_birth')->nullable();
             $table->unsignedBigInteger('gender_id');
             $table->foreign('gender_id')->references('id')->on('genders');
-            $table->string('profile_picture', 255)->nullable();
+            $table->string('profile_picture', 255)->default('default_profile_picture.jpg');
             $table->text('additional_information')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

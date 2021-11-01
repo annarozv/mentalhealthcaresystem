@@ -11,10 +11,10 @@
                 </td>
                 <td>
                     @if (app()->getLocale() === 'en')
-                        {{ $user->role->role_name }}
+                        {{ $user->role->role }}
                     @endif
                     @if (app()->getLocale() === 'lv')
-                        {{ $user->role->role_name_lv }}
+                        {{ $user->role->role_lv }}
                     @endif
                 </td>
             </tr>
@@ -38,11 +38,26 @@
             </tr>
         </table>
         <hr>
-        <form method="POST" onsubmit="return confirm(document.getElementById('confirm_message').value.toString());" action="{{ route('user.deactivate', Auth::id()) }}">
-            @csrf
-            @method('post')
-            <input type="hidden" id="confirm_message" value="{{ __('auth.profile_deactivation_confirm') }}">
-            <input class="btn btn-outline-danger" type="submit" value="{{ __('auth.profile_deactivate') }}">
-        </form>
+        <div class="btn-toolbar" role="toolbar">
+            @if(Auth::user()->isPatient())
+                <div class="btn-group" role="group">
+                    {{-- if patient user has patient information connected with his profile, he will be able to see it --}}
+                    @if($user->patient && $user->patient->is_active)
+                        <a class="btn btn-outline-dark" href="/patient/{{ $user->patient->id }}/info">{{ __('auth.public_info') }}</a>
+                        {{-- otherwise he will be offered to create public user information --}}
+                    @else
+                        <a class="btn btn-outline-dark" href="/patient/new">{{ __('auth.create_public_info') }}</a>
+                    @endif
+                </div>
+            @endif
+            <div class="btn-group ml-2" role="group">
+                <form method="POST" onsubmit="return confirm(document.getElementById('confirm_message').value.toString());" action="{{ route('user.deactivate', Auth::id()) }}">
+                    @csrf
+                    @method('post')
+                    <input type="hidden" id="confirm_message" value="{{ __('auth.profile_deactivation_confirm') }}">
+                    <input class="btn btn-outline-danger" type="submit" value="{{ __('auth.profile_deactivate') }}">
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
