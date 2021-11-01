@@ -95,27 +95,27 @@ class User extends Authenticatable
      * @return bool
      */
     public function isAdmin() {
-        return $this->role->role_name === 'Administrator';
+        return $this->role->role === 'Administrator';
     }
 
     /**
      * @return bool
      */
     public function isModerator() {
-        return $this->role->role_name === 'Moderator';
+        return $this->role->role === 'Moderator';
     }
 
     /**
      * @return bool
      */
     public function isTherapist() {
-        return $this->role->role_name === 'Therapist';
+        return $this->role->role === 'Therapist';
     }
 
     /**
      * @return bool
      */
     public function isPatient() {
-        return $this->role->role_name === 'Patient';
+        return $this->role->role === 'Patient';
     }
 }

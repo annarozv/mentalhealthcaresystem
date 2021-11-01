@@ -110,6 +110,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default profile Picture Name
+    |--------------------------------------------------------------------------
+    |
+    | Default profile picture name - used when user did not upload his profile picture
+    |
+    */
+
+    'default_profile_picture_name' => 'default_profile_picture.jpg',
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
