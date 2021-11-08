@@ -39,5 +39,8 @@ return [
     'new' => 'Jauna',
     'remove_profile_pic' => 'Dzēst profila bildi',
     'additional_information' => 'Papildus Informācija',
-    'profile_picture' => 'Profila Bilde'
+    'profile_picture' => 'Profila Bilde',
+    'my_therapists' => 'Mani Terapeiti',
+    'no_therapists' => 'Šobrīd Jūms nav neviena terapeita',
+    'find_therapist' => 'Atrast Terapeitu'
 ];

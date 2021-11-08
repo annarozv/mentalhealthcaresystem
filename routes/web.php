@@ -47,6 +47,7 @@ Route::post('patient/store', [PatientController::class, 'store'])->name('patient
 Route::get('patient/edit', [PatientController::class, 'edit']);
 Route::post('patient/{id}/update', [PatientController::class, 'update'])->name('patient.update');
 Route::post('patient/{id}/remove', [PatientController::class, 'destroy'])->name('patient.remove');
+Route::get('my/therapists', [PatientController::class, 'getTherapists'])->name('patient.therapists');
 
 // Routes for illnesses
 Route::get('illnesses', [IllnessController::class, 'index'])->name('illness.all');
