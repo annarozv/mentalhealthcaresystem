@@ -31,9 +31,15 @@ class PatientController extends Controller
     {
         // user can add patient information only if he is a patient
         if (Auth::check() && Auth::user()->isPatient()) {
-            $genders = Gender::all();
+            // check if user already has patient info
+            $patientInfo = Patient::where('user_id', Auth::id())->where('is_active', true)->first();
 
-            return view('patient_new', ['genders' => $genders]);
+            // return create view only if no active patient information associated with user was found
+            if (empty($patientInfo)) {
+                $genders = Gender::all();
+
+                return view('patient_new', ['genders' => $genders]);
+            }
         }
 
         // otherwise, redirect user to the homepage
@@ -54,10 +60,16 @@ class PatientController extends Controller
         ]);
 
         // check if database already contains patient information associated with current user
-        // if yes, delete it
-        Patient::where('user_id', Auth::id())->get()->each->delete();
+        $patientInfo = Patient::where('user_id', Auth::id())->first();
 
-        $patientInfo = new Patient();
+        // if no associated information is present, create a new record
+        if (empty($patientInfo)) {
+            $patientInfo = new Patient();
+            $patientInfo->user_id = Auth::id();
+        } else {
+            // else reactivate the old record
+            $patientInfo->is_active = true;
+        }
 
         // if the image was uploaded in the form
         if ($request->profile_picture) {
@@ -76,7 +88,6 @@ class PatientController extends Controller
         $patientInfo->date_of_birth = $request->date_of_birth;
         $patientInfo->gender_id = $request->gender;
         $patientInfo->additional_information = $request->additional_information;
-        $patientInfo->user_id = Auth::id();
         $patientInfo->save();
 
         // redirect to patient info page
@@ -121,6 +132,35 @@ class PatientController extends Controller
             return view('patient_public_info', ['patient' => $patient]);
         }
 
+        // if access is not allowed, redirect to homepage
+        return redirect('/');
+    }
+
+    /**
+     * Show list of therapists associated with a patient
+     *
+     * @return Application|Factory|View
+     */
+    public function getTherapists()
+    {
+        // check if user is patient
+        if (Auth::check() && Auth::user()->isPatient()) {
+            // check if user has an active patient info
+            $patient = Patient::where('user_id', Auth::id())->where('is_active', true)->first();
+
+            if (!empty($patient)) {
+                $connectionTypeId = RequestType::where('type', 'Connection')->first()->id;
+                $activeStatusId = Status::where('status', 'Approved')->first()->id;
+                $therapistIds = RequestModel::where('type_id', $connectionTypeId)->where('status_id', $activeStatusId)->get(['therapist_id']);
+
+                // get all the therapists, that are connected with patient
+                $therapists = Therapist::whereIn('id', $therapistIds)->where('is_active', true)->get();
+
+                return view('patient_therapists', ['therapists' => $therapists]);
+            }
+        }
+
+        // if access is not allowed or patient info not present, redirect to homepage
         return redirect('/');
     }
 
@@ -221,21 +261,26 @@ class PatientController extends Controller
         $patient = Patient::find($id);
         $patient->is_active = false;
 
-        // remove profile picture before deactivating patient data
-        // not removing profile picture may lead to storage pollution
-        $imagePath = sprintf(
-            '%s/%s',
-            public_path('images'),
-            $patient->profile_picture
-        );
+        $defaultPicture = Config::get('app.default_profile_picture_name');
 
-        // remove previous profile picture from storage
-        if (File::exists($imagePath)) {
-            File::delete($imagePath);
+        // if patient profile picture was not default
+        if ($patient->profile_picture !== $defaultPicture) {
+            // remove profile picture before deactivating patient data
+            // not removing profile picture may lead to storage pollution
+            $imagePath = sprintf(
+                '%s/%s',
+                public_path('images'),
+                $patient->profile_picture
+            );
+
+            // remove previous profile picture from storage
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+
+            // set user profile picture to default in database
+            $patient->profile_picture = $defaultPicture;
         }
-
-        // set user profile picture to default in database
-        $patient->profile_picture = Config::get('app.default_profile_picture_name');
 
         $patient->save();
 

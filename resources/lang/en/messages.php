@@ -39,5 +39,8 @@ return [
     'new' => 'New',
     'remove_profile_pic' => 'Remove my profile picture',
     'additional_information' => 'Additional Information',
-    'profile_picture' => 'Profile Picture'
+    'profile_picture' => 'Profile Picture',
+    'my_therapists' => 'My Therapists',
+    'no_therapists' => 'You are not connected with any therapists at the moment',
+    'find_therapist' => 'Find A Therapist'
 ];
