@@ -7,6 +7,7 @@ use App\Http\Controllers\IllnessController;
 use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\TherapistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,20 @@ Route::get('patient/edit', [PatientController::class, 'edit']);
 Route::post('patient/{id}/update', [PatientController::class, 'update'])->name('patient.update');
 Route::post('patient/{id}/remove', [PatientController::class, 'destroy'])->name('patient.remove');
 Route::get('my/therapists', [PatientController::class, 'getTherapists'])->name('patient.therapists');
+
+// Therapist routes
+Route::get('therapists', [TherapistController::class, 'index'])->name('therapist.all');
+Route::get('therapist/{id}/info', [TherapistController::class, 'show']);
+Route::get('therapist/new', [TherapistController::class, 'create']);
+Route::post('therapist/store', [TherapistController::class, 'store'])->name('therapist.store');
+Route::get('therapist/edit', [TherapistController::class, 'edit']);
+Route::post('therapist/{id}/update', [TherapistController::class, 'update'])->name('therapist.update');
+Route::post('therapist/{id}/remove', [TherapistController::class, 'destroy'])->name('therapist.remove');
+Route::post('therapists/search', [TherapistController::class, 'filter'])->name('therapists.filter');
+Route::get('therapists/search', function () {
+    return redirect('therapists');
+
+});
 
 // Routes for illnesses
 Route::get('illnesses', [IllnessController::class, 'index'])->name('illness.all');

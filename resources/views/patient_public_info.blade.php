@@ -21,11 +21,13 @@
                     @if(app()->getLocale() === 'lv')
                         {{ $patient->gender->gender_lv }}
                     @endif
-                    <hr>
-                    <h5>{{ __('messages.additional_information') }}</h5>
-                    <p>
-                        {{ $patient->additional_information }}
-                    </p>
+                    @if($patient->additional_information)
+                        <hr>
+                        <h5>{{ __('messages.additional_information') }}</h5>
+                        <p>
+                            {{ $patient->additional_information }}
+                        </p>
+                    @endif
                 </div>
             </div>
                 @if(Auth::id() === $patient->user->id)
@@ -37,8 +39,8 @@
                         <form method="POST" onsubmit="return confirm(document.getElementById('confirm_message').value.toString());" action="{{ route('patient.remove', $patient->id) }}">
                             @csrf
                             @method('post')
-                            <input type="hidden" id="confirm_message" value="{{ __('patients.patient_remove_confirm') }}">
-                            <input class="btn btn-outline-danger" type="submit" value="{{ __('patients.patient_remove') }}">
+                            <input type="hidden" id="confirm_message" value="{{ __('messages.info_remove_confirm') }}">
+                            <input class="btn btn-outline-danger" type="submit" value="{{ __('messages.info_remove') }}">
                         </form>
                     </div>
                 @endif

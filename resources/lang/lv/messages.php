@@ -41,6 +41,20 @@ return [
     'additional_information' => 'Papildus Informācija',
     'profile_picture' => 'Profila Bilde',
     'my_therapists' => 'Mani Terapeiti',
-    'no_therapists' => 'Šobrīd Jūms nav neviena terapeita',
-    'find_therapist' => 'Atrast Terapeitu'
+    'therapists' => 'Terapeiti',
+    'therapist_info' => 'Terapeita Informācija',
+    'specialization' => 'Specializācija',
+    'education_info' => 'Izglītības Informācija',
+    'document_see' => 'Apskatīt terapeita izglītībās informāciju',
+    'education_document' => 'Dokuments, kas apliecina izglītību',
+    'reviews' => 'Pacientu Atsauksmes',
+    'rating' => 'Reitings',
+    'no_therapists' => 'Informācija par terapeitiem nav pieejama',
+    'no_connected_therapists' => 'Šobrīd Jūms nav neviena terapeita',
+    'no_reviews' => 'Terapeitam šobrīd nav nevienas atsauksmes',
+    'author' => 'Autors(-e)',
+    'find_therapist' => 'Atrast Terapeitu',
+    'replace' => '(aizvietos iepriekšējo dokumentu)',
+    'info_remove' => 'Dzēst Informāciju',
+    'info_remove_confirm' => 'Vai Jūs tiešām vēlāties dzēst savus datus?'
 ];

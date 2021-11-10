@@ -41,6 +41,20 @@ return [
     'additional_information' => 'Additional Information',
     'profile_picture' => 'Profile Picture',
     'my_therapists' => 'My Therapists',
-    'no_therapists' => 'You are not connected with any therapists at the moment',
-    'find_therapist' => 'Find A Therapist'
+    'therapists' => 'Therapists',
+    'therapist_info' => 'Therapist Information',
+    'specialization' => 'Specialization',
+    'education_info' => 'Education Information',
+    'document_see' => 'See therapist education document',
+    'education_document' => 'Education Document',
+    'reviews' => 'Patient Reviews',
+    'rating' => 'Rating',
+    'no_therapists' => 'No information about therapists is available',
+    'no_connected_therapists' => 'You are not connected with any therapists at the moment',
+    'no_reviews' => 'Therapist does not have any reviews yet',
+    'author' => 'Author',
+    'find_therapist' => 'Find A Therapist',
+    'replace' => '(will replace the old one)',
+    'info_remove' => 'Delete my information',
+    'info_remove_confirm' => 'Are you sure you want to delete your information?'
 ];
