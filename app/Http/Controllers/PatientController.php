@@ -55,8 +55,9 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'profile_picture' => 'image|mimes:jpeg,png,jpg',
-            'date_of_birth' => 'nullable|before:today'
+            'profile_picture' => 'image|max:10240|mimes:jpeg,png,jpg',
+            'date_of_birth' => 'nullable|before:today',
+            'additional_information' => 'nullable|max:5000'
         ]);
 
         // check if database already contains patient information associated with current user
@@ -195,8 +196,9 @@ class PatientController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'profile_picture' => 'image|mimes:jpeg,png,jpg',
-            'date_of_birth' => 'nullable|before:today'
+            'profile_picture' => 'image|max:10240|mimes:jpeg,png,jpg',
+            'date_of_birth' => 'nullable|before:today',
+            'additional_information' => 'nullable|max:5000'
         ]);
 
         $patient = Patient::find($id);

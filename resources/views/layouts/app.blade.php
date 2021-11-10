@@ -35,6 +35,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link" href="{{ route('illness.all') }}">{{ __('messages.illnesses_title') }}</a></li>
                         <li><a class="nav-link" href="{{ route('symptom.all') }}">{{ __('messages.symptoms_link') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('therapist.all') }}">{{ __('messages.therapists') }}</a></li>
                         @if(Auth::check() && Auth::user()->isPatient())
                             <li><a class="nav-link" href="{{ route('patient.therapists') }}">{{ __('messages.my_therapists') }}</a></li>
                         @endif

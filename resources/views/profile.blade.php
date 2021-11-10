@@ -44,9 +44,20 @@
                     {{-- if patient user has patient information connected with his profile, he will be able to see it --}}
                     @if($user->patient && $user->patient->is_active)
                         <a class="btn btn-outline-dark" href="/patient/{{ $user->patient->id }}/info">{{ __('auth.public_info') }}</a>
-                        {{-- otherwise he will be offered to create public user information --}}
+                        {{-- otherwise he will be offered to create public patient information --}}
                     @else
                         <a class="btn btn-outline-dark" href="/patient/new">{{ __('auth.create_public_info') }}</a>
+                    @endif
+                </div>
+            @endif
+            @if(Auth::user()->isTherapist())
+                <div class="btn-group" role="group">
+                    {{-- if therapist user has therapist information connected with his profile, he will be able to see it --}}
+                    @if($user->therapist && $user->therapist->is_active)
+                        <a class="btn btn-outline-dark" href="/therapist/{{ $user->therapist->id }}/info">{{ __('auth.public_info') }}</a>
+                        {{-- otherwise he will be offered to create public therapist information --}}
+                    @else
+                        <a class="btn btn-outline-dark" href="/therapist/new">{{ __('auth.create_public_info') }}</a>
                     @endif
                 </div>
             @endif
