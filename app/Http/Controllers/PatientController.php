@@ -150,8 +150,8 @@ class PatientController extends Controller
             $patient = Patient::where('user_id', Auth::id())->where('is_active', true)->first();
 
             if (!empty($patient)) {
-                $connectionTypeId = RequestType::where('type', 'Connection')->first()->id;
-                $activeStatusId = Status::where('status', 'Approved')->first()->id;
+                $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
+                $activeStatusId = Status::where('status', Status::APPROVED)->first()->id;
                 $therapistIds = RequestModel::where('type_id', $connectionTypeId)->where('status_id', $activeStatusId)->get(['therapist_id']);
 
                 // get all the therapists, that are connected with patient
@@ -166,9 +166,92 @@ class PatientController extends Controller
     }
 
     /**
+     * Show all requests connected with patient
+     *
+     * @return Application|Factory|View|RedirectResponse|Redirector
+     */
+    public function getRequests()
+    {
+        // check if user is patient
+        if (Auth::check() && Auth::user()->isPatient()) {
+            // check if user has an active patient info
+            $patient = Patient::where('user_id', Auth::id())->where('is_active', true)->first();
+
+            if (!empty($patient)) {
+                $requests = RequestModel::where('patient_id', $patient->id)->get();
+
+                return view('patient_requests', ['requests' => $requests]);
+            }
+        }
+
+        // if access is not allowed or patient info not present, redirect to homepage
+        return redirect('/');
+    }
+
+    /**
+     * Connect patient with a therapist
+     *
+     * @param $therapistId
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function connectWithTherapist($therapistId)
+    {
+        $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
+        $patientCreatedStatusId = Status::where('status', Status::INITIATED)->first()->id;
+
+        // create new connection between therapist and a patient (right now not approved by therapist)
+        if (Auth::user()->patient) {
+            $patientId = Auth::user()->patient->id;
+            $connection = RequestModel::where('type_id', $connectionTypeId)
+                ->where('patient_id', $patientId)
+                ->where('therapist_id', $therapistId)
+                ->first();
+
+            // if no previous connection was recorded between the patient and the therapist, create a new record
+            if (empty($connection)) {
+                $connection = new RequestModel();
+                $connection->patient_id = $patientId;
+                $connection->therapist_id = $therapistId;
+                $connection->type_id = $connectionTypeId;
+            }
+
+            $connection->status_id = $patientCreatedStatusId;
+            $connection->save();
+        }
+
+        return redirect('my/requests');
+    }
+
+    /**
+     * Disconnect from the therapist
+     *
+     * @param $therapistId
+     * @return RedirectResponse
+     */
+    public function disconnectTherapist($therapistId)
+    {
+        $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
+        $removedStatusId = Status::where('status', Status::REMOVED)->first()->id;
+
+        if (Auth::check() && Auth::user()->patient) {
+            $connection = RequestModel::where('patient_id', Auth::user()->patient->id)
+                ->where('therapist_id', $therapistId)
+                ->where('type_id', $connectionTypeId)
+                ->first();
+
+            if ($connection) {
+                $connection->status_id = $removedStatusId;
+                $connection->save();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
-     * @return Application|RedirectResponse|Response|Redirector
+     * @return Application|Factory|Redirector|RedirectResponse|View
      */
     public function edit()
     {

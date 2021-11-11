@@ -38,6 +38,7 @@
                         <li><a class="nav-link" href="{{ route('therapist.all') }}">{{ __('messages.therapists') }}</a></li>
                         @if(Auth::check() && Auth::user()->isPatient())
                             <li><a class="nav-link" href="{{ route('patient.therapists') }}">{{ __('messages.my_therapists') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('patient.requests') }}">{{ __('messages.my_requests') }}</a></li>
                         @endif
                     </ul>
 

@@ -11,6 +11,26 @@ class Status extends Model
     use HasFactory;
 
     /**
+     * @const for status 'Approved'
+     */
+    public const APPROVED = 'Approved';
+
+    /**
+     * @const for status 'Initiated by patient'
+     */
+    public const INITIATED = 'Initiated by patient';
+
+    /**
+     * @const for status 'Refused by therapist'
+     */
+    public const REFUSED = 'Refused by therapist';
+
+    /**
+     * @const for status 'Removed by patient'
+     */
+    public const REMOVED = 'Removed by patient';
+
+    /**
      * @var string[]
      */
     protected $fillable = [
