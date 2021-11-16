@@ -31,9 +31,14 @@
                             @method('post')
                             @csrf
                             <input type="hidden" id="disconnect_confirm_message" value="{{ __('messages.disconnect_confirm_message') }}">
-                            <input class="btn btn-outline-danger d-inline float-right ml-2" type="submit" value="{{ __('messages.disconnect_therapist') }}">
+                            <input class="btn btn-outline-danger d-inline float-right m-1" type="submit" value="{{ __('messages.disconnect_therapist') }}">
                         </form>
-                        <a href="/therapist/{{ $therapist->id }}/info" class="btn btn-outline-dark float-right">
+                        <form class="form-inline d-inline float-right" method="POST" action="{{ route('request.feedback', $therapist->id) }}">
+                            @method('post')
+                            @csrf
+                            <input class="btn btn-outline-dark d-inline float-right m-1" type="submit" value="{{ __('messages.request_feedback') }}">
+                        </form>
+                        <a href="/therapist/{{ $therapist->id }}/info" class="btn btn-outline-dark float-right m-1">
                             {{ __('messages.therapist_info') }}
                         </a>
                     </div>

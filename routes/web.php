@@ -53,6 +53,8 @@ Route::get('my/therapists', [PatientController::class, 'getTherapists'])->name('
 Route::get('my/requests', [PatientController::class, 'getRequests'])->name('patient.requests');
 Route::post('connect/{therapistId}', [PatientController::class, 'connectWithTherapist'])->name('connect.therapist');
 Route::post('disconnect/{therapistId}', [PatientController::class, 'disconnectTherapist'])->name('disconnect.therapist');
+Route::post('request/feedback/{therapistId}', [PatientController::class, 'requestFeedback'])->name('request.feedback');
+Route::post('request/{id}/remove', [PatientController::class, 'removeFeedbackRequest'])->name('patient.remove.request');
 Route::get('review/{therapistId}/create', [ReviewController::class, 'create'])->name('review.create');
 Route::post('review/{therapistId}/store/{patientId}', [ReviewController::class, 'store'])->name('review.store');
 Route::get('review/{id}/edit', [ReviewController::class, 'edit']);

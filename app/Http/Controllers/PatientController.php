@@ -249,6 +249,59 @@ class PatientController extends Controller
     }
 
     /**
+     * Request feedback from therapist
+     *
+     * @param $therapistId
+     * @return RedirectResponse
+     */
+    public function requestFeedback($therapistId) {
+        $feedbackTypeId = RequestType::where('type', RequestType::FEEDBACK)->first()->id;
+        $initiatedStatusId = Status::where('status', Status::INITIATED)->first()->id;
+
+        if (Auth::check() && Auth::user()->patient) {
+            $patientId = Auth::user()->patient->id;
+
+            // check if patient has already created a request, that is not yet approved by doctor
+            $feedbackRequest = RequestModel::where('patient_id', $patientId)
+                ->where('therapist_id', $therapistId)
+                ->where('type_id', $feedbackTypeId)
+                ->where('status_id', $initiatedStatusId)
+                ->first();
+
+            if (empty($feedbackRequest)) {
+                // if no initiated feedback request was between patient and therapist
+                $newFeedbackRequest = new RequestModel();
+
+                $newFeedbackRequest->patient_id = $patientId;
+                $newFeedbackRequest->therapist_id = $therapistId;
+                $newFeedbackRequest->type_id = $feedbackTypeId;
+                $newFeedbackRequest->status_id = $initiatedStatusId;
+
+                $newFeedbackRequest->save();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove initiated request
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function removeFeedbackRequest($id)
+    {
+        // set 'removed' status for the request
+        $removedStatusId = Status::where('status', Status::REMOVED)->first()->id;
+        $request = RequestModel::find($id);
+        $request->status_id = $removedStatusId;
+        $request->save();
+
+        return redirect()->back();
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @return Application|Factory|Redirector|RedirectResponse|View
