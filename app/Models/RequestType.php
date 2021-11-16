@@ -11,6 +11,16 @@ class RequestType extends Model
     use HasFactory;
 
     /**
+     * @const for connection request type
+     */
+    public const CONNECTION = 'Connection';
+
+    /**
+     * @const for feedback request type
+     */
+    public const FEEDBACK = 'Feedback';
+
+    /**
      * @var string[]
      */
     protected $fillable = [

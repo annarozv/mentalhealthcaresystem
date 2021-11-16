@@ -8,6 +8,7 @@ use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\TherapistController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,16 @@ Route::get('patient/edit', [PatientController::class, 'edit']);
 Route::post('patient/{id}/update', [PatientController::class, 'update'])->name('patient.update');
 Route::post('patient/{id}/remove', [PatientController::class, 'destroy'])->name('patient.remove');
 Route::get('my/therapists', [PatientController::class, 'getTherapists'])->name('patient.therapists');
+Route::get('my/requests', [PatientController::class, 'getRequests'])->name('patient.requests');
+Route::post('connect/{therapistId}', [PatientController::class, 'connectWithTherapist'])->name('connect.therapist');
+Route::post('disconnect/{therapistId}', [PatientController::class, 'disconnectTherapist'])->name('disconnect.therapist');
+Route::post('request/feedback/{therapistId}', [PatientController::class, 'requestFeedback'])->name('request.feedback');
+Route::post('request/{id}/remove', [PatientController::class, 'removeFeedbackRequest'])->name('patient.remove.request');
+Route::get('review/{therapistId}/create', [ReviewController::class, 'create'])->name('review.create');
+Route::post('review/{therapistId}/store/{patientId}', [ReviewController::class, 'store'])->name('review.store');
+Route::get('review/{id}/edit', [ReviewController::class, 'edit']);
+Route::post('review/{id}/update', [ReviewController::class, 'update'])->name('review.update');
+Route::post('review/{id}/remove', [ReviewController::class, 'destroy'])->name('review.delete');
 
 // Therapist routes
 Route::get('therapists', [TherapistController::class, 'index'])->name('therapist.all');

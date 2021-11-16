@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Gender;
 use App\Models\Patient;
+use App\Models\RequestType;
 use App\Models\Review;
+use App\Models\Status;
 use App\Models\Therapist;
 use App\Models\User;
+use App\Models\Request as RequestModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -200,10 +203,41 @@ class TherapistController extends Controller
             $rating = round($ratingSum / count($reviews), 2);
         }
 
+        // variables that will determine functionality available in the therapist view
+        $isConnected = false;
+        $isPatient = false;
+
+        if (Auth::check() && Auth::user()->isPatient()) {
+            $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
+            $activeStatusId = Status::where('status', Status::APPROVED)->first()->id;
+            $initiatedStatusId = Status::where('status', Status::INITIATED)->first()->id;
+
+            // if user has an active patient information
+            if (Auth::user()->patient && Auth::user()->patient->is_active) {
+                // determine if there is an active connection between patient and therapist
+                $connection = RequestModel::where('patient_id', Auth::user()->patient->id)
+                    ->where('therapist_id', $id)
+                    ->where('type_id', $connectionTypeId)
+                    ->whereIn('status_id', [$activeStatusId, $initiatedStatusId])
+                    ->first();
+
+                // determine if user was connected with therapist at all
+                $connectionAllStatuses = RequestModel::where('patient_id', Auth::user()->patient->id)
+                    ->where('therapist_id', $id)
+                    ->where('type_id', $connectionTypeId)
+                    ->first();
+
+                $isConnected = !empty($connection);
+                $isPatient = !empty($connectionAllStatuses);
+            }
+        }
+
         return view('therapist_public_info', [
             'therapist' => $therapist,
             'reviews' => $reviews,
-            'rating' => $rating
+            'rating' => $rating,
+            'isConnected' => $isConnected,
+            'isPatient' => $isPatient
         ]);
     }
 

@@ -78,6 +78,10 @@
                 </div>
                 <input class="btn btn-dark w-75" type="submit" value="{{ __('messages.save_info') }}">
             </form>
+        @else
+            <div class="alert alert-info">
+                {{ __('messages.no_info') }}
+            </div>
         @endif
     </div>
 @endsection
