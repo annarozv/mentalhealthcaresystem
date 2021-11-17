@@ -108,26 +108,14 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        // patient info is available for patient, his therapists and moderators
-        $allowedIdArray = [Patient::find($id)->user_id];
-
-        // get right type and status id for requests
-        $requestTypeId = RequestType::where('type', 'Connection')->get('id')->first();
-        $requestStatusId = Status::where('status', 'Approved')->get('id')->first();
-
-        // find all therapists, that are connected with patient at the moment
-        $therapistIds = RequestModel::where('type_id', $requestTypeId)
-            ->where('status_id', $requestStatusId)
-            ->get('therapist_id');
-
-        // add therapist user id to allowed user id list
-        foreach ($therapistIds as $therapistId) {
-            $therapist = Therapist::where('id', $therapistId)->where('is_active', true)->first();
-
-            if (!empty($therapist)) array_push($allowedIdArray, $therapist->user_id);
-        }
-
-        if (Auth::check() && (in_array(Auth::id(), $allowedIdArray) || Auth::user()->isModerator())) {
+        if (
+            Auth::check()
+            && (
+                Auth::id() === Patient::find($id)->user_id
+                || Auth::user()->isTherapist()
+                || Auth::user()->isModerator()
+            )
+        ) {
             $patient = Patient::where('id', $id)->where('is_active', true)->first();
 
             return view('patient_public_info', ['patient' => $patient]);
@@ -152,7 +140,10 @@ class PatientController extends Controller
             if (!empty($patient)) {
                 $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
                 $activeStatusId = Status::where('status', Status::APPROVED)->first()->id;
-                $therapistIds = RequestModel::where('type_id', $connectionTypeId)->where('status_id', $activeStatusId)->get(['therapist_id']);
+                $therapistIds = RequestModel::where('patient_id', $patient->id)
+                    ->where('type_id', $connectionTypeId)
+                    ->where('status_id', $activeStatusId)
+                    ->get(['therapist_id']);
 
                 // get all the therapists, that are connected with patient
                 $therapists = Therapist::whereIn('id', $therapistIds)->where('is_active', true)->get();

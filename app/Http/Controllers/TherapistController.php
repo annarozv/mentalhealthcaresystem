@@ -242,6 +242,125 @@ class TherapistController extends Controller
     }
 
     /**
+     * Return list of patients, connected with therapist
+     *
+     * @return Application|Factory|View|RedirectResponse|Redirector
+     */
+    public function getPatients()
+    {
+        // check if user is a therapist and has an active therapist info
+        if (
+            Auth::check()
+            && Auth::user()->isTherapist()
+            && Auth::user()->therapist
+            && Auth::user()->therapist->is_active == true
+        ) {
+            $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
+            $activeStatusId = Status::where('status', Status::APPROVED)->first()->id;
+            $patientIds = RequestModel::where('therapist_id', Auth::user()->therapist->id)
+                ->where('type_id', $connectionTypeId)
+                ->where('status_id', $activeStatusId)
+                ->get('patient_id');
+
+            $patients = Patient::whereIn('id', $patientIds)->where('is_active', true)->get();
+
+            return view('therapist_patients', ['patients' => $patients]);
+
+        }
+
+        // otherwise, redirect to homepage
+        return redirect('/');
+    }
+
+    /**
+     * Get all requests, connected with therapist
+     *
+     * @return Application|Factory|View|RedirectResponse|Redirector
+     */
+    public function getRequests()
+    {
+        // first check if user is a therapist with an active therapist info
+        if (
+            Auth::check()
+            && Auth::user()->isTherapist()
+            && Auth::user()->therapist
+            && Auth::user()->therapist->is_active == true
+        ) {
+            $requests = RequestModel::where('therapist_id', Auth::user()->therapist->id)->get();
+
+            return view('therapist_requests', ['requests' => $requests]);
+        }
+
+        // otherwise, redirect to home page
+        return redirect('/');
+    }
+
+    /**
+     * Disconnect or refuse connection with the patient
+     *
+     * @param $patientId
+     * @return RedirectResponse
+     */
+    public function disconnectPatient($patientId)
+    {
+        $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
+        $refusedStatusId = Status::where('status', Status::REFUSED)->first()->id;
+
+        if (Auth::check() && Auth::user()->therapist) {
+            $connection = RequestModel::where('therapist_id', Auth::user()->therapist->id)
+                ->where('patient_id', $patientId)
+                ->where('type_id', $connectionTypeId)
+                ->first();
+
+            if ($connection) {
+                $connection->status_id = $refusedStatusId;
+                $connection->save();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Approve patient request
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function approveRequest($id)
+    {
+        $request = RequestModel::find($id);
+        $approvedStatusId = Status::where('status', Status::APPROVED)->first()->id;
+
+        if ($request) {
+            $request->status_id = $approvedStatusId;
+            $request->save();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove patient request
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function refuseRequest($id)
+    {
+        $request = RequestModel::find($id);
+        $refusedStatusId = Status::where('status', Status::REFUSED)->first()->id;
+
+        if ($request) {
+            $request->status_id = $refusedStatusId;
+            $request->save();
+        }
+
+        return redirect()->back();
+    }
+
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @return Application|Factory|View
