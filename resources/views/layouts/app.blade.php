@@ -40,6 +40,10 @@
                             <li><a class="nav-link" href="{{ route('patient.therapists') }}">{{ __('messages.my_therapists') }}</a></li>
                             <li><a class="nav-link" href="{{ route('patient.requests') }}">{{ __('messages.my_requests') }}</a></li>
                         @endif
+                        @if(Auth::check() && Auth::user()->isTherapist())
+                            <li><a class="nav-link" href="{{ route('therapist.patients') }}">{{ __('messages.my_patients') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('therapist.requests') }}">{{ __('messages.requests') }}</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

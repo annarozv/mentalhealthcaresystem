@@ -48,7 +48,7 @@
             <div class="alert alert-info w-75">
                 {{ __('messages.no_connected_therapists') }}
             </div>
-            <a class="btn btn-outline-dark" href="">{{ __('messages.find_therapist') }}</a>
+            <a class="btn btn-outline-dark" href="/therapists">{{ __('messages.find_therapist') }}</a>
         @endif
     </div>
 @endsection
