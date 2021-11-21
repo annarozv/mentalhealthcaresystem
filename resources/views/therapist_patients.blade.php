@@ -29,6 +29,9 @@
                             <input type="hidden" id="disconnect_confirm_message" value="{{ __('messages.disconnect_confirm_message_pat') }}">
                             <input class="btn btn-outline-danger d-inline float-right m-1" type="submit" value="{{ __('messages.disconnect_patient') }}">
                         </form>
+                        <a href="/diary/{{ $patient->id }}" class="btn btn-outline-dark float-right m-1">
+                            {{ __('messages.patient_diary') }}
+                        </a>
                         <a href="/patient/{{ $patient->id }}/info" class="btn btn-outline-dark float-right m-1">
                             {{ __('messages.patient_info') }}
                         </a>

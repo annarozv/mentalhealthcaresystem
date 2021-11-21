@@ -221,6 +221,7 @@ class IllnessController extends Controller
     {
         $symptomIds = $request->symptoms;
 
+        // TODO: check if array not empty
         foreach ($symptomIds as $symptomId) {
             $illnessSymptom = new IllnessSymptom();
             $illnessSymptom->illness_id = $id;

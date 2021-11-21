@@ -14,7 +14,7 @@
         <form method="POST" action="{{ route('illness.add_symptoms', $illness->id) }}">
             @csrf
             @method('post')
-            <label for="symptoms">{{ __('messages.symptoms_link') }}</label>
+            <label for="symptoms">{{ __('messages.symptoms') }}</label>
             <select class="form-control" id="symptoms" name="symptoms[]" multiple="multiple">
                 @foreach($symptoms as $symptom)
                     <option value="{{ $symptom->id }}">

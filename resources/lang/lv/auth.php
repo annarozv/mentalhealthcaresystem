@@ -7,7 +7,7 @@ return [
      */
 
     'register' => 'Reģistrēties',
-    'login' => 'Pierakstīties',
+    'login' => 'Pieteikties',
     'profile' => 'Mans Profils',
     'profile_info' => 'Profila Informācija',
     'deactivated' => 'Jūsu profils ir deactivēts',

@@ -9,6 +9,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\DiaryController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,21 @@ Route::post('approve/feedback/{id}', [TherapistController::class, 'approveReques
 Route::post('request/{id}/remove/therapist', [TherapistController::class, 'refuseRequest'])
     ->name('therapist.remove.request');
 
+// Diary routes
+Route::get('diary/{patientId}', [DiaryController::class, 'index'])->name('diary');
+Route::get('record/{id}/info', [DiaryController::class, 'show']);
+Route::get('diary/{patientId}/new', [DiaryController::class, 'create']);
+Route::post('diary/{patientId}/store', [DiaryController::class, 'store'])->name('record.store');
+Route::get('record/{id}/edit', [DiaryController::class, 'edit']);
+Route::post('record/{id}/update', [DiaryController::class, 'update'])->name('record.update');
+Route::post('record/{id}/delete', [DiaryController::class, 'destroy'])->name('record.delete');
+Route::post('diary/{patientId}/clear', [DiaryController::class, 'deleteAllRecords'])->name('records.delete.all');
+
+Route::get('comment/{recordId}/new', [CommentController::class, 'create']);
+Route::post('comment/{recordId}/store', [CommentController::class, 'store'])->name('comment.store');
+Route::get('comment/{id}/edit', [CommentController::class, 'edit']);
+Route::post('comment/{id}/update', [CommentController::class, 'update'])->name('comment.update');
+Route::post('comment/{id}/remove', [CommentController::class, 'destroy'])->name('comment.delete');
 
 // Routes for illnesses
 Route::get('illnesses', [IllnessController::class, 'index'])->name('illness.all');

@@ -34,11 +34,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link" href="{{ route('illness.all') }}">{{ __('messages.illnesses_title') }}</a></li>
-                        <li><a class="nav-link" href="{{ route('symptom.all') }}">{{ __('messages.symptoms_link') }}</a></li>
+                        <li><a class="nav-link" href="{{ route('symptom.all') }}">{{ __('messages.symptoms') }}</a></li>
                         <li><a class="nav-link" href="{{ route('therapist.all') }}">{{ __('messages.therapists') }}</a></li>
-                        @if(Auth::check() && Auth::user()->isPatient())
+                        @if(Auth::check() && Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->is_active == true)
                             <li><a class="nav-link" href="{{ route('patient.therapists') }}">{{ __('messages.my_therapists') }}</a></li>
                             <li><a class="nav-link" href="{{ route('patient.requests') }}">{{ __('messages.my_requests') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('diary', Auth::user()->patient->id) }}">{{ __('messages.my_diary') }}</a></li>
                         @endif
                         @if(Auth::check() && Auth::user()->isTherapist())
                             <li><a class="nav-link" href="{{ route('therapist.patients') }}">{{ __('messages.my_patients') }}</a></li>
