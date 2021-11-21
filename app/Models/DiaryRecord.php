@@ -14,7 +14,7 @@ class DiaryRecord extends Model
     /**
      * @var string
      */
-    protected $table = '';
+    protected $table = 'diary_records';
 
     /**
      * @var string[]
@@ -53,6 +53,13 @@ class DiaryRecord extends Model
      * @return HasMany
      */
     public function symptoms() {
-        return $this->hasMany('App\Models\DiaryRecordSymptom');
+        return $this->hasMany('App\Models\DiaryRecordSymptom', 'record_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function comments() {
+        return $this->hasMany('App\Models\Comment', 'record_id');
     }
 }

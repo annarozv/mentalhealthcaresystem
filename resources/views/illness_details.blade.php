@@ -43,7 +43,7 @@
                 @endif
             </p>
             <h4>
-                {{ __('messages.symptoms_link') }}
+                {{ __('messages.symptoms') }}
             </h4>
             @if(!empty($symptoms) && count($symptoms))
                 <ul class="list-group">
