@@ -14,14 +14,10 @@
             @if(!Auth::guest() && Auth::user()->isAdmin())
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group" role="group">
-                        <form method="GET" class="form-inline" action="{{ route('illness.edit', $illness->id) }}">
-                            <input class="btn btn-outline-primary" type="submit" value="{{ __('messages.edit') }}">
-                        </form>
+                        <a class="btn btn-outline-primary" href="/illness/{{ $illness->id }}/edit">{{ __('messages.edit') }}</a>
                     </div>
                     <div class="btn-group ml-2" role="group">
-                        <form method="GET" class="form-inline" action="{{ route('illness.display_symptoms', $illness->id) }}">
-                            <input class="btn btn-outline-success" type="submit" value="{{ __('messages.add_symptoms') }}">
-                        </form>
+                        <a class="btn btn-outline-success" href="/illness/{{ $illness->id }}/add_symptoms">{{ __('messages.add_symptoms') }}</a>
                     </div>
                     <div class="btn-group ml-2" role="group">
                         <form method="POST" onsubmit="return confirm(document.getElementById('confirm_message').value.toString());" action="{{ route('illness.remove', $illness->id) }}">
