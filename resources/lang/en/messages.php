@@ -50,6 +50,7 @@ return [
     'therapists' => 'Therapists',
     'therapist' => 'Therapist',
     'patient' => 'Patient',
+    'patients' => 'Patients',
     'diary' => 'Diary',
     'my_diary' => 'My Diary',
     'patient_diary' => 'Patient Diary',
@@ -109,5 +110,19 @@ return [
     'find_therapist' => 'Find a Therapist',
     'replace' => '(will replace the old one)',
     'info_remove' => 'Delete my information',
-    'info_remove_confirm' => 'Are you sure you want to delete your information?'
+    'info_remove_confirm' => 'Are you sure you want to delete your information?',
+    'moderators' => 'Moderators',
+    'no_moderators' => 'No moderators are added yet',
+    'add_moderator' => 'Add Moderator',
+    'remove_moderator' => 'Remove Moderator',
+    'moderator_remove_confirm_message' => 'Are you sure you want to remove this moderator?',
+    'system_users' => 'System Users',
+    'no_therapist_records' => 'There are no therapists in the system yet',
+    'no_patients' => 'There are no patients in the system yet',
+    'active' => 'Active',
+    'deactivated' => 'Deactivated',
+    'deactivate' => 'Deactivate User',
+    'deactivate_confirm_message' => 'Are you sure you want to deactivate this user?',
+    'reactivate' => 'Reactivate User',
+    'reactivate_confirm_message' => 'Are you sure you want to reactivate this user?'
 ];

@@ -11,6 +11,7 @@ use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\DiaryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ModeratorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,21 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 
 // User related routes
 Route::get('profile', [HomeController::class, 'profile'])->name('profile');
-Route::post('user/{id}/deactivate', [UserController::class, 'deactivate'])->name('user.deactivate');
+Route::post('user/{id}/deactivate/self', [UserController::class, 'deactivate'])->name('user.deactivate');
+
+// Admin and moderator routes
+Route::get('moderators', [ModeratorController::class, 'index']);
+Route::get('moderator/add', [ModeratorController::class, 'create']);
+Route::post('moderator/store', [ModeratorController::class, 'store'])->name('moderator.store');
+Route::post('moderator/{id}/remove', [ModeratorController::class, 'destroy'])->name('moderator.remove');
+
+Route::get('system/users', [ModeratorController::class, 'getSystemUsers']);
+Route::post('user/{id}/deactivate', [ModeratorController::class, 'deactivateUser'])->name('deactivate.user');
+Route::post('user/{id}/reactivate', [ModeratorController::class, 'reactivateUser'])->name('reactivate.user');
+Route::post('system/users/search', [ModeratorController::class, 'filterUsers'])->name('users.search');
+Route::get('system/users/search', function () {
+    return redirect('system/users');
+});
 
 // Patient routes
 Route::get('patient/{id}/info', [PatientController::class, 'show']);
@@ -79,7 +94,6 @@ Route::post('therapist/{id}/remove', [TherapistController::class, 'destroy'])->n
 Route::post('therapists/search', [TherapistController::class, 'filter'])->name('therapists.filter');
 Route::get('therapists/search', function () {
     return redirect('therapists');
-
 });
 Route::get('therapist/patients', [TherapistController::class, 'getPatients'])->name('therapist.patients');
 Route::get('therapist/requests', [TherapistController::class, 'getRequests'])->name('therapist.requests');
@@ -112,7 +126,6 @@ Route::get('illness/{id}/details', [IllnessController::class, 'show'])->name('il
 Route::post('illnesses/search', [IllnessController::class, 'filter'])->name('illnesses.filter');
 Route::get('illnesses/search', function () {
     return redirect('illnesses');
-
 });
 Route::get('illness/create', [IllnessController::class, 'create']);
 Route::post('illness/store', [IllnessController::class, 'store'])->name('illness.store');

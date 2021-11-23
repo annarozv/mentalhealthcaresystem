@@ -49,6 +49,7 @@ return [
     'request_status' => 'Pieteikuma statuss',
     'therapist' => 'Terapeits',
     'patient' => 'Pacients',
+    'patients' => 'Pacienti',
     'diary' => 'Dienasgrāmata',
     'patient_diary' => 'Pacienta Dienasgrāmata',
     'my_diary' => 'Mana Dienasgrāmata',
@@ -109,5 +110,19 @@ return [
     'find_therapist' => 'Atrast Terapeitu',
     'replace' => '(aizvietos iepriekšējo dokumentu)',
     'info_remove' => 'Dzēst Informāciju',
-    'info_remove_confirm' => 'Vai Jūs tiešām vēlāties dzēst savus datus?'
+    'info_remove_confirm' => 'Vai Jūs tiešām vēlāties dzēst savus datus?',
+    'moderators' => 'Moderatori',
+    'no_moderators' => 'Moderatori vēl nav pievienoti',
+    'add_moderator' => 'Pievienot Moderatoru',
+    'remove_moderator' => 'Noņemt Moderatoru',
+    'moderator_remove_confirm_message' => 'Vai Jūs tiešām vēlāties noņemt šo moderatoru?',
+    'system_users' => 'Sistēmas Lietotāji',
+    'no_therapist_records' => 'Sistēmā pagaidām nav registrēts neviens terapeits',
+    'no_patients' => 'Sistēmā pagaidām nav registrēts neviens pacients',
+    'active' => 'Aktīvs',
+    'deactivated' => 'Deaktīvēts',
+    'deactivate' => 'Deaktīvēt Lietotāju',
+    'deactivate_confirm_message' => 'Vai Jūs tiešām vēlāties deaktīvēt šo lietotāju?',
+    'reactivate' => 'Atjaunot Lietotāju',
+    'reactivate_confirm_message' => 'Vai Jūs tiešām vēlāties atjaunot šo lietotāju?'
 ];

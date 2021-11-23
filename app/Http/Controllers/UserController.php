@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
+use App\Models\Therapist;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -18,15 +20,32 @@ class UserController extends Controller
      */
     public function deactivate($id)
     {
+        // deactivate user
         $user = User::find($id);
         $user->is_active = false;
         $user->save();
 
-        // if user is Admin or a Moderator
-        // TODO: redirect back to users view
-        if (Auth::user()->isAdmin() || Auth::user()->isModerator()) return redirect('/');
+        // deactivate user therapist info if present
+        if ($user->isTherapist()) {
+            $therapist = Therapist::where('user_id', $user->id)->first();
 
-        // if authenticated user was a simple user who deactivated their own account, then he is logged out
+            if (!empty($therapist)) {
+                $therapist->is_active = false;
+                $therapist->save();
+            }
+        }
+
+        // deactivate user patient info if present
+        if ($user->isPatient()) {
+            $patient = Patient::where('user_id', $user->id)->first();
+
+            if (!empty($patient)) {
+                $patient->is_active = false;
+                $patient->save();
+            }
+        }
+
+        // user is logged out
         Auth::logout();
 
         return redirect('/');
