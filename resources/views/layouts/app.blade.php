@@ -45,6 +45,12 @@
                             <li><a class="nav-link" href="{{ route('therapist.patients') }}">{{ __('messages.my_patients') }}</a></li>
                             <li><a class="nav-link" href="{{ route('therapist.requests') }}">{{ __('messages.requests') }}</a></li>
                         @endif
+                        @if(Auth::check() && Auth::user()->isAdmin())
+                            <li><a class="nav-link" href="/moderators">{{ __('messages.moderators') }}</a></li>
+                        @endif
+                        @if(Auth::check() && Auth::user()->isModerator())
+                            <li><a class="nav-link" href="/system/users">{{ __('messages.system_users') }}</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

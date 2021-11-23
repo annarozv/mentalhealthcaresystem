@@ -8,7 +8,7 @@
                 @csrf
                 @method('post')
                 <div class="form-row justify-content-end d-flex float-right">
-                    <input class="form-control w-50" id="keyword" name="keyword" type="text" placeholder="{{ __('messages.enter_keyword') }}">
+                    <input class="form-control w-50" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
                     <input class="btn btn-dark ml-2" type="submit" value="{{ __('messages.search') }}">
                 </div>
             </form>
