@@ -221,12 +221,14 @@ class IllnessController extends Controller
     {
         $symptomIds = $request->symptoms;
 
-        // TODO: check if array not empty
-        foreach ($symptomIds as $symptomId) {
-            $illnessSymptom = new IllnessSymptom();
-            $illnessSymptom->illness_id = $id;
-            $illnessSymptom->symptom_id = $symptomId;
-            $illnessSymptom->save();
+        // check if any symptoms are chosen
+        if (!empty($symptomIds) && count($symptomIds)) {
+            foreach ($symptomIds as $symptomId) {
+                $illnessSymptom = new IllnessSymptom();
+                $illnessSymptom->illness_id = $id;
+                $illnessSymptom->symptom_id = $symptomId;
+                $illnessSymptom->save();
+            }
         }
 
         // redirect to illness details page

@@ -14,9 +14,7 @@
             @if(!Auth::guest() && Auth::user()->isAdmin())
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group" role="group">
-                        <form method="GET" class="form-inline" action="{{ route('symptom.edit', $symptom->id) }}">
-                            <input class="btn btn-outline-primary" type="submit" value="{{ __('messages.edit') }}">
-                        </form>
+                        <a class="btn btn-outline-primary" href="/symptom/{{ $symptom->id }}/edit">{{ __('messages.edit') }}</a>
                     </div>
                     <div class="btn-group ml-2" role="group">
                         <form method="POST" onsubmit="return confirm(document.getElementById('confirm_message').value.toString());" action="{{ route('symptom.remove', $symptom->id) }}">
