@@ -203,6 +203,12 @@ class ModeratorController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Filter users depending on the keyword
+     *
+     * @param Request $request
+     * @return Application|Factory|View
+     */
     public function filterUsers(Request $request)
     {
         $key = sprintf(
