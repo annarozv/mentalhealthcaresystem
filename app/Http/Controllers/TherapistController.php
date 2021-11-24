@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiaryRecord;
+use App\Models\DiaryRecordSymptom;
 use App\Models\Gender;
+use App\Models\IllnessSymptom;
+use App\Models\MentalIllness;
 use App\Models\Patient;
 use App\Models\RequestType;
 use App\Models\Review;
 use App\Models\Status;
+use App\Models\Symptom;
 use App\Models\Therapist;
 use App\Models\User;
 use App\Models\Request as RequestModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -40,6 +46,7 @@ class TherapistController extends Controller
      * Filter the therapist list depending on the keyword
      *
      * @param Request $request
+     * @return Application|Factory|View
      */
     public function filter(Request $request)
     {
@@ -60,9 +67,9 @@ class TherapistController extends Controller
                 ->get();
 
         foreach ($allTherapists as $therapist) {
-            // if therapist name and surname contains the keyword
-            $contains = str_contains($therapist->user->name, $request->keyword)
-                || str_contains($therapist->user->surname, $request->keyword);
+            // if therapist name or surname contains the keyword
+            $contains = stripos($therapist->user->name, $request->keyword) !== false
+                || stripos($therapist->user->surname, $request->keyword) !== false;
 
             // add therapist to the array, if not present yet
             if ($contains && !$therapists->contains('id', $therapist->id)) {
@@ -71,6 +78,104 @@ class TherapistController extends Controller
         }
 
         return view('therapists', ['therapists' => $therapists]);
+    }
+
+    public function findTherapistsIndividually()
+    {
+        if (Auth::check() && Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->is_active) {
+            $allTherapists = Therapist::where('is_active', true)->get();
+            $patient = Auth::user()->patient;
+
+            // long string that will contain all the patient information that can be used for individualized search
+            // firstly add patient textual information to the string and one white space as a delimiter
+            $dataString = $patient->additional_information . ' ';
+
+            // then get all patient diary record
+            $diaryRecords = DiaryRecord::where('patient_id', $patient->id)->where('is_active', true)->get();
+            // create an empty Symptom collection
+            $symptoms = Collection::make(new Symptom);
+            $illnesses = Collection::make(new MentalIllness);
+
+            foreach ($diaryRecords as $diaryRecord) {
+                // add all diary record texts to the main search string
+                $dataString .=  $diaryRecord->record_text . ' ';
+
+                $connectedSymptomIds = DiaryRecordSymptom::where('record_id', $diaryRecord->id)
+                    ->pluck('symptom_id')
+                    ->toArray();
+                $connectedSymptoms = Symptom::where('is_active', true)->whereIn('id', $connectedSymptomIds)->get();
+
+                foreach ($connectedSymptoms as $connectedSymptom) {
+                    if (!$symptoms->contains('id', $connectedSymptom->id)) {
+                        $symptoms->push($connectedSymptom);
+                    }
+                }
+            }
+
+            foreach ($symptoms as $symptom) {
+                // add symptom data to data string
+                $dataString .=  sprintf(
+                    '%s %s ',
+                    $symptom->symptom_name,
+                    $symptom->symptom_name_lv
+                );
+
+                // get all the illnesses that are connected with symptoms
+                $connectedIllnessIds = IllnessSymptom::where('symptom_id', $symptom->id)
+                    ->pluck('illness_id')
+                    ->toArray();
+                $connectedIllnesses = MentalIllness::where('is_active', true)
+                    ->whereIn('id', $connectedIllnessIds)
+                    ->get();
+
+                foreach ($connectedIllnesses as $connectedIllness) {
+                    if (!$illnesses->contains($connectedIllness)) {
+                        $illnesses->push($connectedIllness);
+                    }
+                }
+            }
+
+            // add illness data to the data string
+            foreach ($illnesses as $illness) {
+                $dataString .= sprintf(
+                    '%s %s ',
+                    $illness->illness_name,
+                    $illness->illness_name_lv
+                );
+            }
+
+            // split the big data string into the array of words (keys) that will be used to find therapist
+            $keyArray = preg_split('/[^\w]*([\s]+[^\w]*|$)/', $dataString, 0,PREG_SPLIT_NO_EMPTY);
+            // leave only unique keys in the array to avoid re-doing the same work for the same keys
+            $keys = array_unique($keyArray);
+
+            // create an empty collection for storing found therapists
+            $therapists = Collection::make(new Therapist);
+
+            // for each key check, if therapist information contains it
+            foreach ($keys as $key) {
+                // check only if key is longer than 5 symbols
+                $minKeyLength = 5;
+
+                if (strlen($key) >= $minKeyLength) {
+                    foreach ($allTherapists as $therapist) {
+                        $contains = stripos($therapist->specialization, $key) !== false
+                            || stripos($therapist->education_information, $key) !== false
+                            || stripos($therapist->additional_information, $key) !== false;
+
+                        // if therapist information contains key, add therapist to the collection, if not present yet
+                        if ($contains && !$therapists->contains('id', $therapist->id)) {
+                            $therapists->push($therapist);
+                        }
+                    }
+                }
+            }
+
+            return view('found_therapists', ['therapists' => $therapists]);
+        }
+
+        // if user is not a patient or user does not have an active patient information, he will be redirected back
+        return redirect()->back();
     }
 
     /**

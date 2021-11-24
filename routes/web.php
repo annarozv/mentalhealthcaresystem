@@ -103,6 +103,7 @@ Route::post('approve/feedback/{id}', [TherapistController::class, 'approveReques
     ->name('therapist.approve.request');
 Route::post('request/{id}/remove/therapist', [TherapistController::class, 'refuseRequest'])
     ->name('therapist.remove.request');
+Route::get('therapist/find', [TherapistController::class, 'findTherapistsIndividually']);
 
 // Diary routes
 Route::get('diary/{patientId}', [DiaryController::class, 'index'])->name('diary');

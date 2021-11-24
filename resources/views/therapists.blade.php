@@ -2,17 +2,23 @@
 
 @section('content')
     <div class="container">
+        <h4 class="d-inline mb-0 mt-5">{{ __('messages.therapists') }}</h4>
+        <form method="POST" class="form-horizontal d-flex form-inline justify-content-end float-right mr-1" action="{{ route('therapists.filter') }}">
+            @csrf
+            @method('post')
+            <div class="form-row justify-content-end d-flex float-right">
+                <input class="form-control w-50" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
+                <input class="btn btn-dark ml-2" type="submit" value="{{ __('messages.search') }}">
+            </div>
+        </form>
+        <hr class="mt-4">
+        @if(Auth::check() && Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->is_active)
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-primary" href="/therapist/find">{{ __('messages.individual_search') }}</a>
+            </div>
+            <hr>
+        @endif
         @if(!empty($therapists) && count($therapists))
-            <h4 class="d-inline mb-0 mt-5">{{ __('messages.therapists') }}</h4>
-            <form method="POST" class="form-horizontal d-flex form-inline justify-content-end float-right mr-1" action="{{ route('therapists.filter') }}">
-                @csrf
-                @method('post')
-                <div class="form-row justify-content-end d-flex float-right">
-                    <input class="form-control w-50" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
-                    <input class="btn btn-dark ml-2" type="submit" value="{{ __('messages.search') }}">
-                </div>
-            </form>
-            <hr class="mt-4">
             <div class="d-lg-flex d-xl-flex flex-row flex-wrap">
                 @foreach($therapists as $therapist)
                     <div class="card w-sm-100 w-md-100 w-lg-50 w-xl-50 m-1">
