@@ -79,6 +79,11 @@ return [
     'comment_delete_confirm' => 'Vai Jūs tiešām vēlāties dzēst komentāru?',
     'therapists' => 'Terapeiti',
     'therapist_info' => 'Terapeita Informācija',
+    'individual_search' => 'Individuāls Terapeita Meklēšanas Rīks',
+    'search_results' => 'Meklēšanas Rezultāti',
+    'no_found_therapists' => 'Diemžēl mēs nespējām atrast Jums terapeitu.
+    Lūdzu, pamēģiniet vēlreiz vēlāk vai izvēlējieties terapeitu no kopēja terapeitu saraksta.',
+    'therapist_list' => 'Visi Terapeiti',
     'patient_info' => 'Pacienta Informācija',
     'specialization' => 'Specializācija',
     'education_info' => 'Izglītības Informācija',

@@ -108,6 +108,11 @@ return [
     'review_delete_confirm' => 'Are you sure you want to delete this review?',
     'author' => 'Author',
     'find_therapist' => 'Find a Therapist',
+    'individual_search' => 'Individual Therapist Finding Tool',
+    'search_results' => 'Search Results',
+    'no_found_therapists' => 'Unfortunately we could not find a therapist for you.
+    Please try later or choose one of the therapists in the therapist list.',
+    'therapist_list' => 'All Therapists',
     'replace' => '(will replace the old one)',
     'info_remove' => 'Delete my information',
     'info_remove_confirm' => 'Are you sure you want to delete your information?',
