@@ -40,32 +40,43 @@ class SymptomController extends Controller
      */
     public function filter(Request $request)
     {
-        $key = sprintf(
-            '%%%s%%',
-            $request->keyword
-        );
-        $symptoms = [];
+        // if input is not empty
+        if ($request->keyword) {
+            // split keywords into separate words
+            $keyArray = preg_split('/[^\w]*([\s]+[^\w]*|$)/', $request->keyword, 0, PREG_SPLIT_NO_EMPTY);
+            $keys = array_unique($keyArray);
+            $symptoms = [];
 
-        // depending on locale we filter symptoms list by keyword
-        if (app()->getLocale() === 'en') {
-            $symptoms = Symptom::where('is_active', true)
-                ->where(function ($query) use ($key) {
-                    $query->where('symptom_name', 'like', $key)
-                        ->orWhere('description', 'like', $key);
-                })
-                ->get();
+            foreach ($keys as $key) {
+                $key = sprintf(
+                    '%%%s%%',
+                    $key
+                );
+
+                // depending on locale we filter symptoms list by keyword
+                if (app()->getLocale() === 'en') {
+                    $symptoms = Symptom::where('is_active', true)
+                        ->where(function ($query) use ($key) {
+                            $query->where('symptom_name', 'like', $key)
+                                ->orWhere('description', 'like', $key);
+                        })
+                        ->get();
+                }
+
+                if (app()->getLocale() === 'lv') {
+                    $symptoms = Symptom::where('is_active', true)
+                        ->where(function ($query) use ($key) {
+                            $query->where('symptom_name_lv', 'like', $key)
+                                ->orWhere('description_lv', 'like', $key);
+                        })
+                        ->get();
+                }
+            }
+
+            return view('symptoms', ['symptoms' => $symptoms]);
         }
 
-        if (app()->getLocale() === 'lv') {
-            $symptoms = Symptom::where('is_active', true)
-                ->where(function ($query) use ($key) {
-                    $query->where('symptom_name_lv', 'like', $key)
-                        ->orWhere('description_lv', 'like', $key);
-                })
-                ->get();
-        }
-
-        return view('symptoms', ['symptoms' => $symptoms]);
+        return redirect('symptoms');
     }
 
     /**

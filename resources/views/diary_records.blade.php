@@ -26,7 +26,7 @@
                                 @endif
                             </h5>
                             <h6 class="card-subtitle mb-2 mt-2 text-muted">
-                                {{ DateTime::createFromFormat('Y-m-d', $record->date)->format('F j, Y')  }}
+                                {{ DateTime::createFromFormat('Y-m-d', $record->date)->format('M j, Y')  }}
                             </h6>
                             <h6 class="text-muted">
                                 {{ __('messages.state') }}:

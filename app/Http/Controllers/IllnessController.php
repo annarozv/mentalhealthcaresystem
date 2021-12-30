@@ -40,32 +40,43 @@ class IllnessController extends Controller
      */
     public function filter(Request $request)
     {
-        $key = sprintf(
-            '%%%s%%',
-            $request->keyword
-        );
-        $illnesses = [];
+        // if input is not empty
+        if ($request->keyword) {
+            // split keywords into separate words
+            $keyArray = preg_split('/[^\w]*([\s]+[^\w]*|$)/', $request->keyword, 0, PREG_SPLIT_NO_EMPTY);
+            $keys = array_unique($keyArray);
+            $illnesses = [];
 
-        // depending on locale we filter illnesses list by keyword
-        if (app()->getLocale() === 'en') {
-            $illnesses = MentalIllness::where('is_active', true)
-                ->where(function ($query) use ($key) {
-                    $query->where('illness_name', 'like', $key)
-                          ->orWhere('description', 'like', $key);
-            })
-            ->get();
+            foreach ($keys as $key) {
+                $key = sprintf(
+                    '%%%s%%',
+                    $key
+                );
+
+                // depending on locale we filter illnesses list by keyword
+                if (app()->getLocale() === 'en') {
+                    $illnesses = MentalIllness::where('is_active', true)
+                        ->where(function ($query) use ($key) {
+                            $query->where('illness_name', 'like', $key)
+                                ->orWhere('description', 'like', $key);
+                        })
+                        ->get();
+                }
+
+                if (app()->getLocale() === 'lv') {
+                    $illnesses = MentalIllness::where('is_active', true)
+                        ->where(function ($query) use ($key) {
+                            $query->where('illness_name_lv', 'like', $key)
+                                ->orWhere('description_lv', 'like', $key);
+                        })
+                        ->get();
+                }
+            }
+
+            return view('illnesses', ['illnesses' => $illnesses]);
         }
 
-        if (app()->getLocale() === 'lv') {
-            $illnesses = MentalIllness::where('is_active', true)
-            ->where(function ($query) use ($key) {
-                $query->where('illness_name_lv', 'like', $key)
-                      ->orWhere('description_lv', 'like', $key);
-            })
-            ->get();
-        }
-
-        return view('illnesses', ['illnesses' => $illnesses]);
+        return redirect('illnesses');
     }
 
     /**
@@ -167,12 +178,14 @@ class IllnessController extends Controller
         $this->validate($request, $validationRules);
 
         $illness = MentalIllness::find($id);
-        $illness->illness_name = $request->illness_name;
-        $illness->illness_name_lv = $request->latvian_illness_name;
-        $illness->description = $request->description;
-        $illness->description_lv = $request->latvian_description;
-        $illness->save();
 
+        if (!empty($illness)) {
+            $illness->illness_name = $request->illness_name;
+            $illness->illness_name_lv = $request->latvian_illness_name;
+            $illness->description = $request->description;
+            $illness->description_lv = $request->latvian_description;
+            $illness->save();
+        }
 
         // redirect to illness details page
         $redirectPath = sprintf(
@@ -198,7 +211,14 @@ class IllnessController extends Controller
         $symptoms = Symptom::where('is_active', true)->whereNotIn('id', $symptomIdList)->get();
 
         // return view only if user is admin
-        if(!Auth::guest() && Auth::user()->isAdmin() && $illness->is_active) return view(
+        if (
+            !Auth::guest()
+            && Auth::user()->isAdmin()
+            && $illness->is_active
+            && !empty($symptoms)
+            && count($symptoms)
+        )
+            return view(
             'add_symptoms_to_illness',
             [
                 'symptoms' => $symptoms,
@@ -206,8 +226,13 @@ class IllnessController extends Controller
             ]
         );
 
-        // otherwise, return illnesses view
-        return redirect('illnesses');
+        // otherwise, redirect to illness details page
+        $redirectPath = sprintf(
+            'illness/%s/details',
+            $id
+        );
+
+        return redirect($redirectPath);
     }
 
     /**
@@ -271,8 +296,11 @@ class IllnessController extends Controller
     {
         // inactivate illness (not physically delete from DB)
         $illness = MentalIllness::find($id);
-        $illness->is_active = false;
-        $illness->save();
+
+        if(!empty($illness)) {
+            $illness->is_active = false;
+            $illness->save();
+        }
 
         return redirect('illnesses');
     }

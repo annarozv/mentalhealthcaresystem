@@ -12,7 +12,7 @@ return [
     'profile_info' => 'Profila Informācija',
     'deactivated' => 'Jūsu profils ir deactivēts',
     'profile_deactivate' => 'Deactivēt manu profilu ',
-    'profile_deactivation_confirm' => 'Vai Jūs tiešām gribāt dzēst savu profilu?',
+    'profile_deactivation_confirm' => 'Vai Jūs tiešām vēlāties dzēst savu profilu?',
     'dashboard' => 'Infopanelis',
     'login_success' => 'Jūs esat veiksmīgi pieteikusies sistēmai!',
     'logout' => 'Atteikties',

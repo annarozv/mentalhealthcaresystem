@@ -45,7 +45,12 @@ class DiaryController extends Controller
         if (
             Auth::check()
             && (
-                (Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->id == $patientId)
+                (
+                    Auth::user()->isPatient()
+                    && Auth::user()->patient
+                    && Auth::user()->patient->is_active
+                    && Auth::user()->patient->id == $patientId
+                )
                 || (
                     Auth::user()->isTherapist()
                     && Auth::user()->therapist
@@ -53,13 +58,16 @@ class DiaryController extends Controller
                 )
             )
         ) {
-            $records = DiaryRecord::where('patient_id', $patientId)->where('is_active', true)->get();
+            $records = DiaryRecord::where('patient_id', $patientId)
+                ->where('is_active', true)
+                ->orderBy('date', 'desc')
+                ->get();
 
             return view('diary_records', ['records' => $records, 'patientId' => $patientId]);
         }
 
-        // if not allowed to access the diary, user is redirected back
-        return redirect()->back();
+        // if not allowed to access the diary, user is redirected to the main page
+        return redirect('/');
     }
 
     /**
