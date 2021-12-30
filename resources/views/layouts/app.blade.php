@@ -38,8 +38,8 @@
                         <li><a class="nav-link" href="{{ route('therapist.all') }}">{{ __('messages.therapists') }}</a></li>
                         @if(Auth::check() && Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->is_active == true)
                             <li><a class="nav-link" href="{{ route('patient.therapists') }}">{{ __('messages.my_therapists') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('patient.requests') }}">{{ __('messages.my_requests') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('diary', Auth::user()->patient->id) }}">{{ __('messages.my_diary') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('patient.requests') }}">{{ __('messages.requests') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('diary', Auth::user()->patient->id) }}">{{ __('messages.diary') }}</a></li>
                         @endif
                         @if(Auth::check() && Auth::user()->isTherapist())
                             <li><a class="nav-link" href="{{ route('therapist.patients') }}">{{ __('messages.my_patients') }}</a></li>
@@ -55,9 +55,16 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Language Switch Links -->
-                        <li><a class="nav-link" href="/lang/lv">LV</a></li>
-                        <li><a class="nav-link" href="/lang/en">EN</a></li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('messages.language') }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <!-- Language Switch Links -->
+                                <a class="dropdown-item" href="/lang/lv">LV</a>
+                                <a class="dropdown-item" href="/lang/en">EN</a>
+                            </div>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

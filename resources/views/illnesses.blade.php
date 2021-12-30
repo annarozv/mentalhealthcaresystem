@@ -17,7 +17,7 @@
         <h3 class="text-center">{{ __('messages.illnesses_title') }}</h3>
         <hr>
         <div class="d-flex justify-content-center">
-            <div class="w-50">
+            <div class="w-lg-50">
                 @if(!empty($illnesses) && count($illnesses))
                     @foreach($illnesses as $illness)
                             <div class="border border-secondary text-center rounded p-2 pl-3 pr-3 pt-3 mb-2">

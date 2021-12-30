@@ -5,12 +5,22 @@ return [
      * Validation message translation
      */
 
+    'before' => 'Laukam :attribute ir jābūt datumam pirms :date',
+    'confirmed' => 'Lauks :attribute nav apstiprināts',
+    'date' => 'Lauks :attribute nav derīgs datums',
+    'email' => 'Laukam :attribute ir jābūt e-pasta formātā',
+    'exists' => 'Lauks :attribute nav derīgs',
+    'file' => 'Laukā :attribute ir jāaugšupielādē fails',
+    'image' => 'Laukā :attribute ir jāaugšupielādē bilde',
+    'mimes' => 'Laukā :attribute augšupielādētājam failam ir jāatbilst kādam no tipiem: :values',
     'min' => [
-        'string' => ':attribute ir jābūt vismaz :min simboli',
+        'string' => 'Laukam :attribute ir jāsatur vismaz :min simboli',
     ],
     'max' => [
-        'string' => ':attribute  ir jābūt ne vairāk kā :max simboli',
+        'string' => 'Laukam :attribute  ir jāsatur ne vairāk kā :max simboli',
     ],
-    'required' => ':attribute ir obligāts',
-    'unique' => ':attribute vērtība jau ir aizņemta',
+    'numeric' => 'Laukam :attribute ir jābūt skaitliskam',
+    'required' => 'Lauks :attribute ir obligāts',
+    'string' => 'Laukam :attribute ir jābūt simbolu virknei',
+    'unique' => 'Lauka :attribute vērtība jau ir aizņemta',
 ];

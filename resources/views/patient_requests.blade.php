@@ -10,7 +10,9 @@
                     <div class="card-body">
                         <h5>
                             {{ __('messages.therapist') }}:
-                            {{ $request->therapist->user->name }} {{ $request->therapist->user->surname }}
+                            <a href="/therapist/{{ $request->therapist->id }}/info" class="text-dark">
+                                {{ $request->therapist->user->name }} {{ $request->therapist->user->surname }}
+                            </a>
                         </h5>
                         <h6>
                             {{ __('messages.request_type') }}:

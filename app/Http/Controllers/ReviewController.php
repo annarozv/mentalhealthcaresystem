@@ -116,9 +116,12 @@ class ReviewController extends Controller
         ]);
 
         $review = Review::find($id);
-        $review->mark = $request->review_mark;
-        $review->text = $request->review_text;
-        $review->save();
+
+        if (!empty($review)) {
+            $review->mark = $request->review_mark;
+            $review->text = $request->review_text;
+            $review->save();
+        }
 
         // redirect to therapist info page
         $redirectPath = sprintf(

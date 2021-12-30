@@ -55,8 +55,9 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'profile_picture' => 'image|max:10240|mimes:jpeg,png,jpg',
-            'date_of_birth' => 'nullable|before:today',
+            'profile_picture' => 'nullable|image|max:10240|mimes:jpeg,png,jpg',
+            'gender' => 'integer|exists:genders,id',
+            'date_of_birth' => 'nullable|date|before:today',
             'additional_information' => 'nullable|max:5000'
         ]);
 
@@ -169,7 +170,9 @@ class PatientController extends Controller
             $patient = Patient::where('user_id', Auth::id())->where('is_active', true)->first();
 
             if (!empty($patient)) {
-                $requests = RequestModel::where('patient_id', $patient->id)->get();
+                $requests = RequestModel::where('patient_id', $patient->id)
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
 
                 return view('patient_requests', ['requests' => $requests]);
             }
@@ -324,7 +327,8 @@ class PatientController extends Controller
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'profile_picture' => 'image|max:10240|mimes:jpeg,png,jpg',
-            'date_of_birth' => 'nullable|before:today',
+            'gender' => 'integer|exists:genders,id',
+            'date_of_birth' => 'nullable|date|before:today',
             'additional_information' => 'nullable|max:5000'
         ]);
 

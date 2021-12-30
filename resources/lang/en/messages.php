@@ -5,12 +5,18 @@ return [
      * Messages for pages
      */
 
+    'welcome' => 'Welcome to our Mental Health Care System!',
+    'welcome_text' => 'Here you can find information about mental health disorders and disorder symptoms and information about therapists.
+You can register as a patient or as a therapist if you have an according necessary education and can prove it.
+If you register as a patient and add profile information, you can regularly add diary records, connect with therapists and get recommendations.
+If you register as a therapist and add your profile information, you will be able to help patients.
+Please always be respectful to everyone and enjoy our system!',
     'illnesses_title' => 'Mental Disorders',
     'symptoms_title' => 'Mental Disorder Symptoms',
     'symptoms' => 'Symptoms',
     'no_info' => 'Information is not available',
     'no_symptoms' => 'No information about symptoms is available',
-    'no_illnesses' => 'No information about illnesses is available',
+    'no_illnesses' => 'No information about disorders is available',
     'no_records' => 'Information not found',
     'enter_keyword' => 'Keyword',
     'edit' => 'Edit Information',
@@ -44,7 +50,7 @@ return [
     'my_patients' => 'My Patients',
     'my_requests' => 'My Requests',
     'requests' => 'Requests',
-    'no_requests' => 'You have not created any requests yet',
+    'no_requests' => 'You do not have any requests yet',
     'request_type' => 'Request type',
     'request_status' => 'Request status',
     'therapists' => 'Therapists',
@@ -129,5 +135,6 @@ return [
     'deactivate' => 'Deactivate User',
     'deactivate_confirm_message' => 'Are you sure you want to deactivate this user?',
     'reactivate' => 'Reactivate User',
-    'reactivate_confirm_message' => 'Are you sure you want to reactivate this user?'
+    'reactivate_confirm_message' => 'Are you sure you want to reactivate this user?',
+    'language' => 'Language'
 ];

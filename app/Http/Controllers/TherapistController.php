@@ -50,34 +50,47 @@ class TherapistController extends Controller
      */
     public function filter(Request $request)
     {
-        $key = sprintf(
-            '%%%s%%',
-            $request->keyword
-        );
+        // if keyword is not empty
+        if ($request->keyword) {
+            // split keywords into separate words
+            $keyArray = preg_split('/[^\w]*([\s]+[^\w]*|$)/', $request->keyword, 0, PREG_SPLIT_NO_EMPTY);
+            $keys = array_unique($keyArray);
+            $therapists = Collection::make(new Therapist);
 
-        $allTherapists = Therapist::where('is_active', true)->get();
+            foreach ($keys as $keyword) {
+                $key = sprintf(
+                    '%%%s%%',
+                    $keyword
+                );
 
-        // search for a keyword in therapist data
-        $therapists = Therapist::where('is_active', true)
-            ->where(function ($query) use ($key) {
-                $query->where('specialization', 'like', $key)
-                    ->orWhere('education_information', 'like', $key)
-                    ->orWhere('additional_information', 'like', $key);
-                })
-                ->get();
+                $allTherapists = Therapist::where('is_active', true)->get();
 
-        foreach ($allTherapists as $therapist) {
-            // if therapist name or surname contains the keyword
-            $contains = stripos($therapist->user->name, $request->keyword) !== false
-                || stripos($therapist->user->surname, $request->keyword) !== false;
+                // search for a keyword in therapist data
+                $therapists = Therapist::where('is_active', true)
+                    ->where(function ($query) use ($key) {
+                        $query->where('specialization', 'like', $key)
+                            ->orWhere('education_information', 'like', $key)
+                            ->orWhere('additional_information', 'like', $key);
+                    })
+                    ->get();
 
-            // add therapist to the array, if not present yet
-            if ($contains && !$therapists->contains('id', $therapist->id)) {
-                $therapists->push($therapist);
+                foreach ($allTherapists as $therapist) {
+                    // if therapist name or surname contains the keyword
+                    $contains = stripos($therapist->user->name, $keyword) !== false
+                        || stripos($therapist->user->surname, $keyword) !== false;
+
+                    // add therapist to the array, if not present yet
+                    if ($contains && !$therapists->contains('id', $therapist->id)) {
+                        $therapists->push($therapist);
+                    }
+                }
             }
+
+            return view('therapists', ['therapists' => $therapists]);
         }
 
-        return view('therapists', ['therapists' => $therapists]);
+        // otherwise, redirect to main therapists page
+        return redirect('therapists');
     }
 
     public function findTherapistsIndividually()
@@ -174,8 +187,8 @@ class TherapistController extends Controller
             return view('found_therapists', ['therapists' => $therapists]);
         }
 
-        // if user is not a patient or user does not have an active patient information, he will be redirected back
-        return redirect()->back();
+        // if user is not a patient or user does not have an active patient information, he will be redirected to therapists page
+        return redirect('therapists');
     }
 
     /**
@@ -213,9 +226,10 @@ class TherapistController extends Controller
         $validationRules = array(
             'profile_picture' => 'image|max:10240|mimes:jpeg,png,jpg',
             'date_of_birth' => 'nullable|before:today',
+            'gender' => 'integer|exists:genders,id',
             'specialization' => 'required|min:20|max:5000',
             'education_info' => 'required|min:20|max:5000',
-            'education_document' => 'required|max:10000|mimes:pdf',
+            'education_document' => 'required|file|max:10000|mimes:pdf',
             'additional_information' => 'nullable|max:5000'
         );
         $this->validate($request, $validationRules);
@@ -391,7 +405,9 @@ class TherapistController extends Controller
             && Auth::user()->therapist
             && Auth::user()->therapist->is_active == true
         ) {
-            $requests = RequestModel::where('therapist_id', Auth::user()->therapist->id)->get();
+            $requests = RequestModel::where('therapist_id', Auth::user()->therapist->id)
+                ->orderBy('updated_at', 'desc')
+                ->get();
 
             return view('therapist_requests', ['requests' => $requests]);
         }
@@ -499,9 +515,10 @@ class TherapistController extends Controller
             'surname' => 'required|string|max:255',
             'profile_picture' => 'image|max:10240|mimes:jpeg,png,jpg',
             'date_of_birth' => 'nullable|before:today',
+            'gender' => 'integer|exists:genders,id',
             'specialization' => 'required|min:20|max:5000',
             'education_info' => 'required|min:20|max:5000',
-            'education_document' => 'nullable|max:10000|mimes:pdf',
+            'education_document' => 'nullable|file|max:10000|mimes:pdf',
             'additional_information' => 'nullable|max:5000'
         );
         $this->validate($request, $validationRules);

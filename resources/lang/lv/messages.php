@@ -5,18 +5,25 @@ return [
      * Messages for pages
      */
 
+    'welcome' => 'Esiet sveicināti mūsu Mentālās Veselības Aprūpes Sistēmā!',
+    'welcome_text' => 'Šeit Jūs varēsiet atrast informāciju par mentālās veselības traucējumiem un to simptomiem, kā arī atrast terapeitu informāciju.
+Jūs varēsiet reģistrēties kā pacients vai kā terapeits, ja Jums ir attiecīga izglītība un Jūs varat to apliecināt.
+Ja Jūs reģistrēsieties kā pacients un pievienojiet informāciju par sevi, Jūs varēsiet veikt pierakstus, pieteikties pie terapeitiem un saņemt rekomendācijas.
+Ja Jūs reģistrēsieties kā terapeits un pievienojiet informāciju par sevi, Jūs varēsiet palīdzēt pacientiem.
+Lūdzam Jūs vienmēr izturēties ar cieņu pret visiem! Novēlām Jums izbaudīt mūsu sistēmu!
+',
     'illnesses_title' => 'Mentāli Traucējumi',
     'symptoms_title' => 'Mentālo Traucējumu Simptomi',
     'symptoms' => 'Simptomi',
     'no_info' => 'Informācija nav pieejama',
     'no_symptoms' => 'Informācija par simptomiem nav pieejama',
-    'no_illnesses' => 'Informācija par slimībām nav pieejama',
+    'no_illnesses' => 'Informācija par traucējumiem nav pieejama',
     'no_records' => 'Informācija nav atrasta',
     'enter_keyword' => 'Atslēgas vārds',
     'edit' => 'Labot Informāciju',
     'add_symptoms' => 'Pievienot Simptomus',
     'remove' => 'Dzēst',
-    'remove_symptom' => 'Noņemt simptomu no slimības',
+    'remove_symptom' => 'Noņemt simptomu no traucējuma',
     'create_illness' => 'Izveidot jaunu slimību',
     'update_illness' => 'Atjaunot slimības informāciju',
     'illness_name' => 'Slimības nosaukums angliski',
@@ -44,7 +51,7 @@ return [
     'my_patients' => 'Mani Pacienti',
     'my_requests' => 'Mani Pieteikumi',
     'requests' => 'Pieteikumi',
-    'no_requests' => 'Pagaidām Jūs neesāt izveidojuši nevienu pieteikumu',
+    'no_requests' => 'Pagaidām Jums nav pieteikumu',
     'request_type' => 'Pieteikuma tips',
     'request_status' => 'Pieteikuma statuss',
     'therapist' => 'Terapeits',
@@ -75,7 +82,7 @@ return [
     'edit_comment' => 'Labot komentāru',
     'save_comment' => 'Saglabāt komentāru',
     'remove_all_records' => 'Dzēst visus ierakstus',
-    'all_records_delete_confirm' => 'Vai Jūs tiešām vēlāties izdzēst visus ierakstus?',
+    'all_records_delete_confirm' => 'Vai Jūs tiešām vēlāties dzēst visus ierakstus?',
     'comment_delete_confirm' => 'Vai Jūs tiešām vēlāties dzēst komentāru?',
     'therapists' => 'Terapeiti',
     'therapist_info' => 'Terapeita Informācija',
@@ -92,8 +99,8 @@ return [
     'reviews' => 'Pacientu Atsauksmes',
     'rating' => 'Reitings',
     'no_therapists' => 'Informācija par terapeitiem nav pieejama',
-    'no_connected_therapists' => 'Šobrīd Jūms nav neviena terapeita',
-    'no_connected_patients' => 'Šobrīd Jūms nav neviena pacienta',
+    'no_connected_therapists' => 'Šobrīd Jums nav neviena terapeita',
+    'no_connected_patients' => 'Šobrīd Jums nav neviena pacienta',
     'connect_therapist' => 'Pieteikties pie Terapeita',
     'reconnect_therapist' => 'Atkārtoti pieteikties pie Terapeita',
     'request_feedback' => 'Pieprāsīt rekomendācijas no terapeita',
@@ -122,12 +129,13 @@ return [
     'remove_moderator' => 'Noņemt Moderatoru',
     'moderator_remove_confirm_message' => 'Vai Jūs tiešām vēlāties noņemt šo moderatoru?',
     'system_users' => 'Sistēmas Lietotāji',
-    'no_therapist_records' => 'Sistēmā pagaidām nav registrēts neviens terapeits',
-    'no_patients' => 'Sistēmā pagaidām nav registrēts neviens pacients',
+    'no_therapist_records' => 'Sistēmā pagaidām nav reģistrēts neviens terapeits',
+    'no_patients' => 'Sistēmā pagaidām nav reģistrēts neviens pacients',
     'active' => 'Aktīvs',
     'deactivated' => 'Deaktīvēts',
     'deactivate' => 'Deaktīvēt Lietotāju',
     'deactivate_confirm_message' => 'Vai Jūs tiešām vēlāties deaktīvēt šo lietotāju?',
     'reactivate' => 'Atjaunot Lietotāju',
-    'reactivate_confirm_message' => 'Vai Jūs tiešām vēlāties atjaunot šo lietotāju?'
+        'reactivate_confirm_message' => 'Vai Jūs tiešām vēlāties atjaunot šo lietotāju?',
+    'language' => 'Valoda'
 ];

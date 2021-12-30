@@ -60,9 +60,7 @@
                     @if($therapist->additional_information)
                         <div class="mt-2">
                             <h5>{{ __('messages.additional_information') }}</h5>
-                            <p>
-                                {{ $therapist->additional_information }}
-                            </p>
+                            <p style="white-space: pre-wrap;">{{ $therapist->additional_information }}</p>
                         </div>
                     @endif
                 </div>

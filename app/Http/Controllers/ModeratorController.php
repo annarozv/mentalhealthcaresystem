@@ -9,6 +9,7 @@ use App\Models\Role;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -161,7 +162,7 @@ class ModeratorController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect('system/users');
     }
 
     /**
@@ -200,7 +201,7 @@ class ModeratorController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect('system/users');
     }
 
     /**
@@ -211,26 +212,44 @@ class ModeratorController extends Controller
      */
     public function filterUsers(Request $request)
     {
-        $key = sprintf(
-            '%%%s%%',
-            $request->keyword
-        );
+        $keys = [];
 
         $therapistRoleId = Role::where('role', Role::THERAPIST)->first()->id;
         $patientRoleId = Role::where('role', Role::PATIENT)->first()->id;
 
-        $therapists = User::where('role_id', $therapistRoleId)
-            ->where(function ($query) use ($key) {
-                $query->where('name', 'like', $key)
-                    ->orWhere('surname', 'like', $key)
-                    ->orWhere('email', 'like', $key);
-            })->get();
-        $patients = User::where('role_id', $patientRoleId)
-            ->where(function ($query) use ($key) {
-                $query->where('name', 'like', $key)
-                    ->orWhere('surname', 'like', $key)
-                    ->orWhere('email', 'like', $key);
-            })->get();
+        $therapists = Collection::make(new User);
+        $patients = Collection::make(new User);
+
+        if ($request->keyword) {
+            // split keywords into separate words
+            $keyArray = preg_split('/[^\w]*([\s]+[^\w]*|$)/', $request->keyword, 0, PREG_SPLIT_NO_EMPTY);
+            $keys = array_unique($keyArray);
+
+            if (!empty($keys) && count($keys)) {
+                foreach ($keys as $keyword) {
+                    $key = sprintf(
+                        '%%%s%%',
+                        $keyword
+                    );
+
+                    $therapists = User::where('role_id', $therapistRoleId)
+                        ->where(function ($query) use ($key) {
+                            $query->where('name', 'like', $key)
+                                ->orWhere('surname', 'like', $key)
+                                ->orWhere('email', 'like', $key);
+                        })->get();
+
+                    $patients = User::where('role_id', $patientRoleId)
+                        ->where(function ($query) use ($key) {
+                            $query->where('name', 'like', $key)
+                                ->orWhere('surname', 'like', $key)
+                                ->orWhere('email', 'like', $key);
+                        })->get();
+                }
+            }
+        } else {
+            return redirect('system/users');
+        }
 
         return view('system_users', ['therapists' => $therapists, 'patients' => $patients]);
     }

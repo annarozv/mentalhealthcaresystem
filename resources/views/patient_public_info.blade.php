@@ -24,9 +24,7 @@
                     @if($patient->additional_information)
                         <hr>
                         <h5>{{ __('messages.additional_information') }}</h5>
-                        <p>
-                            {{ $patient->additional_information }}
-                        </p>
+                        <p style="white-space: pre-wrap;">{{ $patient->additional_information }}</p>
                     @endif
                 </div>
             </div>
