@@ -64,14 +64,14 @@
                                 @method('post')
                                 @csrf
                                 <input type="hidden" id="disconnect_confirm_message" value="{{ __('messages.disconnect_confirm_message') }}">
-                                <input class="btn btn-dark d-inline float-right" type="submit" value="{{ __('messages.disconnect_therapist') }}">
+                                <input class="btn btn-dark d-inline float-right mr-2 mb-1" type="submit" value="{{ __('messages.disconnect_therapist') }}">
                             </form>
                         @else
                             @if(!empty(Auth::user()->patient) && Auth::user()->patient->is_active)
                                 <form class="form-inline d-inline" method="POST" action="{{ route('connect.therapist', $therapist->id) }}">
                                     @method('post')
                                     @csrf
-                                    <input class="btn btn-dark d-inline float-right" type="submit" value="{{ __('messages.connect_therapist') }}">
+                                    <input class="btn btn-dark d-inline float-right mr-2 mb-1" type="submit" value="{{ __('messages.connect_therapist') }}">
                                 </form>
                             @endif
                         @endif
