@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Date;
 class DiaryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the patient diary
      *
      * @param $patientId
      * @return Application|Factory|View|RedirectResponse
@@ -41,7 +41,7 @@ class DiaryController extends Controller
             ->pluck('therapist_id')
             ->toArray();
 
-        // user can access the diary if he is a diary author of he is therapist of the patient who is a diary author
+        // user can access the diary if he is a diary author or he is therapist of the patient who is a diary author
         if (
             Auth::check()
             && (
@@ -49,7 +49,7 @@ class DiaryController extends Controller
                     Auth::user()->isPatient()
                     && Auth::user()->patient
                     && Auth::user()->patient->is_active
-                    && Auth::user()->patient->id == $patientId
+                    && Auth::user()->patient->id === (int) $patientId
                 )
                 || (
                     Auth::user()->isTherapist()

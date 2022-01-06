@@ -20,7 +20,11 @@
                         <a class="btn btn-outline-success" href="/illness/{{ $illness->id }}/add_symptoms">{{ __('messages.add_symptoms') }}</a>
                     </div>
                     <div class="btn-group ml-2" role="group">
-                        <form method="POST" onsubmit="return confirm(document.getElementById('confirm_message').value.toString());" action="{{ route('illness.remove', $illness->id) }}">
+                        <form
+                            method="POST"
+                            onsubmit="return confirm(document.getElementById('confirm_message').value.toString());"
+                            action="{{ route('illness.remove', $illness->id) }}"
+                        >
                             @csrf
                             @method('post')
                             <input type="hidden" id="confirm_message" value="{{ __('messages.illness_delete_confirm') }}">
@@ -54,7 +58,10 @@
                                     @endif
                                 </a>
                                 @if(!Auth::guest() && Auth::user()->isAdmin())
-                                    <form method="POST" class="form-inline d-inline float-right" action="{{ route('illness.remove_symptom', [$illness->id, $symptom->id]) }}">
+                                    <form
+                                        method="POST" class="form-inline d-inline float-right"
+                                        action="{{ route('illness.remove_symptom', [$illness->id, $symptom->id]) }}"
+                                    >
                                         @csrf
                                         @method('post')
                                         <input class="btn btn-outline-danger" type="submit" value="{{ __('messages.remove_symptom') }}">

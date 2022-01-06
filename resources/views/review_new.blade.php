@@ -4,12 +4,13 @@
     <div class="container">
         @if(!empty($therapist))
             <h4>{{ __('messages.review_for') }} {{ $therapist->user->name }} {{ $therapist->user->surname }}</h4>
+            <hr>
             <form method="POST" action="{{ route('review.store', [$therapist->id, Auth::user()->patient->id]) }}">
                 @method('post')
                 @csrf
                 <div class="form-group">
                     <label for="review_mark">{{ __('messages.review_mark') }} (0 - 10)</label>
-                    <input class="form-control w-50 @error('review_mark') is-invalid @enderror" type="number" min="0" max="10" id="review_mark" name="review_mark" value="{{ old('review_mark') }}">
+                    <input class="form-control w-auto @error('review_mark') is-invalid @enderror" type="number" min="0" max="10" id="review_mark" name="review_mark" value="{{ old('review_mark') }}">
                     @error('review_mark')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

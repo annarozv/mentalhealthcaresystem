@@ -93,18 +93,31 @@ class TherapistController extends Controller
         return redirect('therapists');
     }
 
+    /**
+     * Individualised therapist search based on patient information and patient diary
+     *
+     * @return Application|Factory|View|RedirectResponse|Redirector
+     */
     public function findTherapistsIndividually()
     {
-        if (Auth::check() && Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->is_active) {
+        if (
+            Auth::check()
+            && Auth::user()->isPatient()
+            && Auth::user()->patient
+            && Auth::user()->patient->is_active
+        ) {
             $allTherapists = Therapist::where('is_active', true)->get();
             $patient = Auth::user()->patient;
 
-            // long string that will contain all the patient information that can be used for individualized search
-            // firstly add patient textual information to the string and one white space as a delimiter
+            // dataString is a long string that will contain all the patient information
+            // that can be used for individualized search.
+            // Firstly add patient textual information to the string
+            // and one white space as a delimiter.
             $dataString = $patient->additional_information . ' ';
 
-            // then get all patient diary record
-            $diaryRecords = DiaryRecord::where('patient_id', $patient->id)->where('is_active', true)->get();
+            // then get all patient diary records
+            $diaryRecords = DiaryRecord::where('patient_id', $patient->id)
+                ->where('is_active', true)->get();
             // create an empty Symptom collection
             $symptoms = Collection::make(new Symptom);
             $illnesses = Collection::make(new MentalIllness);
@@ -116,8 +129,10 @@ class TherapistController extends Controller
                 $connectedSymptomIds = DiaryRecordSymptom::where('record_id', $diaryRecord->id)
                     ->pluck('symptom_id')
                     ->toArray();
-                $connectedSymptoms = Symptom::where('is_active', true)->whereIn('id', $connectedSymptomIds)->get();
+                $connectedSymptoms = Symptom::where('is_active', true)
+                    ->whereIn('id', $connectedSymptomIds)->get();
 
+                // get all the symptoms that are connected to diary records
                 foreach ($connectedSymptoms as $connectedSymptom) {
                     if (!$symptoms->contains('id', $connectedSymptom->id)) {
                         $symptoms->push($connectedSymptom);
@@ -157,9 +172,11 @@ class TherapistController extends Controller
                 );
             }
 
-            // split the big data string into the array of words (keys) that will be used to find therapist
+            // split the big data string into the array of words (keys) that
+            // will be used to find therapist
             $keyArray = preg_split('/[^\w]*([\s]+[^\w]*|$)/', $dataString, 0,PREG_SPLIT_NO_EMPTY);
-            // leave only unique keys in the array to avoid re-doing the same work for the same keys
+            // leave only unique keys in the array
+            // to avoid re-doing the same work for the same keys
             $keys = array_unique($keyArray);
 
             // create an empty collection for storing found therapists
@@ -176,7 +193,8 @@ class TherapistController extends Controller
                             || stripos($therapist->education_information, $key) !== false
                             || stripos($therapist->additional_information, $key) !== false;
 
-                        // if therapist information contains key, add therapist to the collection, if not present yet
+                        // if therapist information contains key,
+                        // add therapist to the collection, if not present yet
                         if ($contains && !$therapists->contains('id', $therapist->id)) {
                             $therapists->push($therapist);
                         }
@@ -187,7 +205,8 @@ class TherapistController extends Controller
             return view('found_therapists', ['therapists' => $therapists]);
         }
 
-        // if user is not a patient or user does not have an active patient information, he will be redirected to therapists page
+        // if user is not a patient or user does not have an active patient information,
+        // he will be redirected to therapists page
         return redirect('therapists');
     }
 

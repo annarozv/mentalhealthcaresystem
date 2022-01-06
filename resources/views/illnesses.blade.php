@@ -3,14 +3,19 @@
 @section('content')
     <div class="container">
         @if(!Auth::guest() && Auth::user()->isAdmin())
-            <a class="btn btn-outline-dark" href="/illness/create">{{ __('messages.create_illness') }}</a>
+            <a class="btn btn-outline-dark" href="/illness/create">
+                {{ __('messages.create_illness') }}
+            </a>
         @endif
         <form method="POST" class="form-horizontal" action="{{ route('illnesses.filter') }}">
             @csrf
             @method('post')
             <div class="form-row justify-content-end">
-                <input class="form-control w-25" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
-                <input class="btn btn-dark ml-2" type="submit" value="{{ __('messages.search') }}">
+                <input class="form-control w-auto" id="keyword"
+                       name="keyword" type="text" maxlength="30"
+                       placeholder="{{ __('messages.enter_keyword') }}">
+                <input class="btn btn-dark ml-2" type="submit"
+                       value="{{ __('messages.search') }}">
             </div>
         </form>
         <hr>
@@ -22,7 +27,8 @@
                     @foreach($illnesses as $illness)
                             <div class="border border-secondary text-center rounded p-2 pl-3 pr-3 pt-3 mb-2">
                                 <h5>
-                                    <a href="{{ route('illness.details', $illness->id)  }}" style="color: #17a2b8 !important">
+                                    <a href="{{ route('illness.details', $illness->id)  }}"
+                                       class="text-dark">
                                         @if (app()->getLocale() === 'en')
                                             {{ $illness->illness_name  }}
                                         @endif

@@ -6,7 +6,7 @@
             <h4 class="d-inline mb-0 mt-5">{{ __('messages.my_therapists') }}</h4>
             <hr>
             @foreach($therapists as $therapist)
-                <div class="card w-75 m-1">
+                <div class="card w-100 m-1">
                     <div class="card-body">
                         <h5 class="card-title">{{ $therapist->user->name }} {{ $therapist->user->surname }}</h5>
                         <span>

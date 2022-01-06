@@ -6,7 +6,7 @@
             <h4 class="d-inline mb-0 mt-5">{{ __('messages.my_patients') }}</h4>
             <hr>
             @foreach($patients as $patient)
-                <div class="card w-75 m-1">
+                <div class="card w-100 m-1">
                     <div class="card-body">
                         <h5 class="card-title">{{ $patient->user->name }} {{ $patient->user->surname }}</h5>
                         <span>
@@ -23,6 +23,7 @@
                                 {{ $patient->gender->gender_lv }}
                             @endif
                         </span>
+                        <br>
                         <form class="form-inline d-inline" method="POST" onsubmit="return confirm(document.getElementById('disconnect_confirm_message').value.toString());" action="{{ route('disconnect.patient', $patient->id) }}">
                             @method('post')
                             @csrf

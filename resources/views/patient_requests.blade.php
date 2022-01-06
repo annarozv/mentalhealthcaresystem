@@ -6,7 +6,7 @@
         <hr>
         @if(!empty($requests) && count($requests))
             @foreach($requests as $request)
-                <div class="card w-75 m-1">
+                <div class="card w-100 m-1">
                     <div class="card-body">
                         <h5>
                             {{ __('messages.therapist') }}:
@@ -73,7 +73,7 @@
                                 <form class="form-inline d-inline" method="POST" action="{{ route('request.feedback', $request->therapist_id) }}">
                                     @method('post')
                                     @csrf
-                                    <input class="btn btn-outline-dark d-inline float-right" type="submit" value="{{ __('messages.request_feedback_again') }}">
+                                    <input style="white-space: normal;" class="btn btn-outline-dark d-inline float-right" type="submit" value="{{ __('messages.request_feedback_again') }}">
                                 </form>
                             @endif
                         @endif

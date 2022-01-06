@@ -9,7 +9,7 @@
             @csrf
             @method('post')
             <div class="form-row justify-content-end">
-                <input class="form-control w-25" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
+                <input class="form-control w-auto" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
                 <input class="btn btn-dark ml-2" type="submit" value="{{ __('messages.search') }}">
             </div>
         </form>
@@ -22,7 +22,7 @@
                     @foreach($symptoms as $symptom)
                             <div class="border border-secondary text-center rounded p-2 pr-3 pl-3 pt-3 mb-2">
                                 <h5>
-                                    <a href="{{ route('symptom.details', $symptom->id)  }}" style="color: #17a2b8 !important">
+                                    <a href="{{ route('symptom.details', $symptom->id)  }}" class="text-dark">
                                         @if (app()->getLocale() === 'en')
                                             {{ $symptom->symptom_name  }}
                                         @endif

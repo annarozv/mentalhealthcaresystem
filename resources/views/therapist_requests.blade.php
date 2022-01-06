@@ -6,7 +6,7 @@
         <hr>
         @if(!empty($requests) && count($requests))
             @foreach($requests as $request)
-                <div class="card w-75 m-1">
+                <div class="card w-100 m-1">
                     <div class="card-body">
                         <h5>
                             {{ __('messages.patient') }}:
