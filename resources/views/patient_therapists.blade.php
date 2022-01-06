@@ -36,7 +36,7 @@
                         <form class="form-inline d-inline float-right" method="POST" action="{{ route('request.feedback', $therapist->id) }}">
                             @method('post')
                             @csrf
-                            <input class="btn btn-outline-dark d-inline float-right m-1" type="submit" value="{{ __('messages.request_feedback') }}">
+                            <input style="white-space: normal;" class="btn btn-outline-dark d-inline float-right m-1" type="submit" value="{{ __('messages.request_feedback') }}">
                         </form>
                         <a href="/therapist/{{ $therapist->id }}/info" class="btn btn-outline-dark float-right m-1">
                             {{ __('messages.therapist_info') }}
