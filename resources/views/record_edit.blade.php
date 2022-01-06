@@ -7,7 +7,13 @@
                 @method('post')
                 @csrf
                 <div class="form-group">
-                    <label for="record_text">{{ __('messages.describe_patient_state') }}</label>
+                    <label for="record_text">
+                        @if(Auth::check() && Auth::user()->isPatient())
+                            {{ __('messages.describe_state') }}
+                        @else
+                            {{ __('messages.describe_patient_state') }}
+                        @endif
+                    </label>
                     <textarea class="form-control @error('record_text') is-invalid @enderror" id="record_text" name="record_text">{{ $record->record_text }}</textarea>
                     @error('record_text')
                         <span class="text-danger">{{ $message }}</span>

@@ -2,19 +2,20 @@
 
 @section('content')
     <div class="container">
-        <h4 class="d-inline mb-0 mt-5">{{ __('messages.therapists') }}</h4>
-        <form method="POST" class="form-horizontal d-flex form-inline justify-content-end float-right mr-1" action="{{ route('therapists.filter') }}">
+        <form method="POST" class="form-horizontal" action="{{ route('therapists.filter') }}">
             @csrf
             @method('post')
-            <div class="form-row justify-content-end d-flex float-right">
-                <input class="form-control w-50" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
+            <div class="form-row justify-content-end">
+                <input class="form-control w-auto" id="keyword" name="keyword" type="text" maxlength="30" placeholder="{{ __('messages.enter_keyword') }}">
                 <input class="btn btn-dark ml-2" type="submit" value="{{ __('messages.search') }}">
             </div>
         </form>
-        <hr class="mt-4">
+        <hr>
+        <h4 class="text-center">{{ __('messages.therapists') }}</h4>
+        <hr class="mt-3">
         @if(Auth::check() && Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->is_active)
             <div class="d-flex justify-content-center">
-                <a class="btn btn-primary" href="/therapist/find">{{ __('messages.individual_search') }}</a>
+                <a class="btn btn-dark" href="/therapist/find">{{ __('messages.individual_search') }}</a>
             </div>
             <hr>
         @endif

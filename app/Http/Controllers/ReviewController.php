@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new review.
      *
      * @return Application|Factory|View|RedirectResponse
      */
@@ -27,8 +27,9 @@ class ReviewController extends Controller
         $therapist = Therapist::find($therapistId);
         $connectionTypeId = RequestType::where('type', RequestType::CONNECTION)->first()->id;
 
-        if (Auth::user()->patient && Auth::user()->patient->is_active) {
-            // determine if user is connected with therapist as a patient (or a former patient)
+        // check if user is a patient
+        if (Auth::check() && Auth::user()->patient && Auth::user()->patient->is_active) {
+            // determine if patient is connected with therapist as a patient (or a former patient)
             $connection = RequestModel::where('patient_id', Auth::user()->patient->id)
                 ->where('therapist_id', $therapistId)
                 ->where('type_id', $connectionTypeId)
@@ -40,12 +41,17 @@ class ReviewController extends Controller
             }
         }
 
-        // otherwise, redirect user back
-        return redirect()->back();
+        // otherwise, redirect user to therapist info page
+        $redirectPath = sprintf(
+            'therapist/%s/info',
+            $therapistId
+        );
+
+        return redirect($redirectPath);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created review in storage.
      *
      * @param Request $request
      * @param $therapistId

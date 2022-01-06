@@ -101,6 +101,7 @@
                     {{ __('messages.no_comments') }}
                 </div>
             @endif
+            <a class="text-dark" href="/diary/{{ $record->patient_id }}"><u>{{ __('messages.back_diary') }}</u></a>
         @else
             <div class="alert alert-info">
                 {{ __('messages.no_info') }}

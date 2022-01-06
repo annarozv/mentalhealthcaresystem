@@ -7,9 +7,9 @@ return [
 
     'welcome' => 'Esiet sveicināti mūsu Mentālās Veselības Aprūpes Sistēmā!',
     'welcome_text' => 'Šeit Jūs varēsiet atrast informāciju par mentālās veselības traucējumiem un to simptomiem, kā arī atrast terapeitu informāciju.
-Jūs varēsiet reģistrēties kā pacients vai kā terapeits, ja Jums ir attiecīga izglītība un Jūs varat to apliecināt.
-Ja Jūs reģistrēsieties kā pacients un pievienojiet informāciju par sevi, Jūs varēsiet veikt pierakstus, pieteikties pie terapeitiem un saņemt rekomendācijas.
-Ja Jūs reģistrēsieties kā terapeits un pievienojiet informāciju par sevi, Jūs varēsiet palīdzēt pacientiem.
+Jūs varēsiet reģistrēties kā pacients vai kā terapeits, ja Jums ir attiecīga izglītība.
+Ja Jūs reģistrēsieties kā pacients un pievienosiet informāciju par sevi, Jūs varēsiet veikt pierakstus, pieteikties pie terapeitiem un saņemt rekomendācijas.
+Ja Jūs reģistrēsieties kā terapeits un pievienosiet informāciju par sevi, Jūs varēsiet palīdzēt pacientiem, sniedzot tiem kvalitatīvas rekomendācijas.
 Lūdzam Jūs vienmēr izturēties ar cieņu pret visiem! Novēlām Jums izbaudīt mūsu sistēmu!
 ',
     'illnesses_title' => 'Mentāli Traucējumi',
@@ -24,19 +24,19 @@ Lūdzam Jūs vienmēr izturēties ar cieņu pret visiem! Novēlām Jums izbaudī
     'add_symptoms' => 'Pievienot Simptomus',
     'remove' => 'Dzēst',
     'remove_symptom' => 'Noņemt simptomu no traucējuma',
-    'create_illness' => 'Izveidot jaunu slimību',
-    'update_illness' => 'Atjaunot slimības informāciju',
-    'illness_name' => 'Slimības nosaukums angliski',
-    'illness_name_lv' => 'Slimības nosaukums latviski',
-    'illness_desc' => 'Slimības apraksts angliski',
-    'illness_desc_lv' => 'Slimības apraksts latviski',
-    'illness_delete_confirm' => 'Vai Jūs tiešām vēlāties nodzēst šo slimību?',
+    'create_illness' => 'Izveidot jaunu traucējumu',
+    'update_illness' => 'Atjaunot traucējuma informāciju',
+    'illness_name' => 'Traucējuma nosaukums angliski',
+    'illness_name_lv' => 'Traucējuma nosaukums latviski',
+    'illness_desc' => 'Traucējuma apraksts angliski',
+    'illness_desc_lv' => 'Traucējuma apraksts latviski',
+    'illness_delete_confirm' => 'Vai Jūs tiešām vēlāties nodzēst šo traucējumu?',
     'symptom_name' => 'Simptoma nosaukums angliski',
     'symptom_name_lv' => 'Simptoma nosaukums latviski',
     'symptom_desc' => 'Simptoma apraksts angliski',
     'symptom_desc_lv' => 'Simptoma apraksts latviski',
     'symptom_delete_confirm' => 'Vai Jūs tiešām vēlāties nodzēst šo simptomu?',
-    'add_symptoms_to_illness' => 'Pievienot slimībai izvēlētus simptomus',
+    'add_symptoms_to_illness' => 'Pievienot traucējumam izvēlētus simptomus',
     'create_symptom' => 'Izveidot jaunu simptomu',
     'update_symptom' => 'Atjaunot simptoma informāciju',
     'search' => 'Meklēt',
@@ -58,6 +58,7 @@ Lūdzam Jūs vienmēr izturēties ar cieņu pret visiem! Novēlām Jums izbaudī
     'patient' => 'Pacients',
     'patients' => 'Pacienti',
     'diary' => 'Dienasgrāmata',
+    'back_diary' => 'Atpakaļ uz dienasgrāmatu',
     'patient_diary' => 'Pacienta Dienasgrāmata',
     'my_diary' => 'Mana Dienasgrāmata',
     'no_diary_records' => 'Jums vēl nav neviena dienasgrāmatas ieraksta',
@@ -65,7 +66,7 @@ Lūdzam Jūs vienmēr izturēties ar cieņu pret visiem! Novēlām Jums izbaudī
     'how_do_you_feel' => 'Kā Jūs šodien jūtaties?',
     'how_does_patient_feel' => 'Kā jūtas Jūsu pacients?',
     'describe_state' => 'Lūdzu, aprakstiet savu pašsajūtu',
-    'describe_patient_state' => 'Lūdzu, aprakstiet pacienta pašsajūtu',
+    'describe_patient_state' => 'Lūdzu, sniedziet rekomendācijas pacientam',
     'state' => 'Pašsajūta',
     'observed_symptoms' => 'Kuri no simptomiem atbilst Jūsu pašsajūtai šodien?',
     'observed_patient_symptoms' => 'Kuri no simptomiem atbilst pacienta pašsajūtai?',
@@ -130,7 +131,9 @@ Lūdzam Jūs vienmēr izturēties ar cieņu pret visiem! Novēlām Jums izbaudī
     'moderator_remove_confirm_message' => 'Vai Jūs tiešām vēlāties noņemt šo moderatoru?',
     'system_users' => 'Sistēmas Lietotāji',
     'no_therapist_records' => 'Sistēmā pagaidām nav reģistrēts neviens terapeits',
+    'no_therapist_records_search' => 'Sistēmā pagaidām nav reģistrēts neviens terapeits ar tādu vārdu vai e-pastu',
     'no_patients' => 'Sistēmā pagaidām nav reģistrēts neviens pacients',
+    'no_patients_search' => 'Sistēmā pagaidām nav reģistrēts neviens pacients ar tādu vārdu vai e-pastu',
     'active' => 'Aktīvs',
     'deactivated' => 'Deaktīvēts',
     'deactivate' => 'Deaktīvēt Lietotāju',

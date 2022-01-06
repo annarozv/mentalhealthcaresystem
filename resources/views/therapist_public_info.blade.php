@@ -2,31 +2,7 @@
 @section('content')
     <div class="container">
         @if(!empty($therapist))
-            <div class="mb-3">
-                <h3 class="d-inline mb-3">{{ __('messages.therapist_info') }}</h3>
-                @if(Auth::check() && Auth::user()->isPatient())
-                    @if($isConnected)
-                        <form class="form-inline d-inline" method="POST" onsubmit="return confirm(document.getElementById('disconnect_confirm_message').value.toString());" action="{{ route('disconnect.therapist', $therapist->id) }}">
-                            @method('post')
-                            @csrf
-                            <input type="hidden" id="disconnect_confirm_message" value="{{ __('messages.disconnect_confirm_message') }}">
-                            <input class="btn btn-dark d-inline float-right" type="submit" value="{{ __('messages.disconnect_therapist') }}">
-                        </form>
-                    @else
-                        @if(!empty(Auth::user()->patient) && Auth::user()->patient->is_active)
-                            <form class="form-inline d-inline" method="POST" action="{{ route('connect.therapist', $therapist->id) }}">
-                                @method('post')
-                                @csrf
-                                <input class="btn btn-dark d-inline float-right" type="submit" value="{{ __('messages.connect_therapist') }}">
-                            </form>
-                        @endif
-                    @endif
-                    {{-- if patient is or was connected with therapist(no matter what connection status is now) --}}
-                    @if($isPatient)
-                        <a class="btn btn-outline-dark d-inline float-right mr-2" href="{{ route('review.create', $therapist->id) }}">{{ __('messages.leave_review') }}</a>
-                    @endif
-                @endif
-            </div>
+            <h3 class="mb-3">{{ __('messages.therapist_info') }}</h3>
             <div class="row">
                 <div class="col-6 col-md-4">
                     <img class="img-fluid img-thumbnail mb-3" src="{{ url('images/' . $therapist->profile_picture) }}" alt="{{ __('messages.profile_picture') }}"/>
@@ -79,6 +55,33 @@
                     </form>
                 </div>
             @endif
+            @if(Auth::check() && Auth::user()->isPatient())
+                <hr>
+                <div class="row">
+                    <div class="ml-3">
+                        @if($isConnected)
+                            <form class="form-inline d-inline" method="POST" onsubmit="return confirm(document.getElementById('disconnect_confirm_message').value.toString());" action="{{ route('disconnect.therapist', $therapist->id) }}">
+                                @method('post')
+                                @csrf
+                                <input type="hidden" id="disconnect_confirm_message" value="{{ __('messages.disconnect_confirm_message') }}">
+                                <input class="btn btn-dark d-inline float-right" type="submit" value="{{ __('messages.disconnect_therapist') }}">
+                            </form>
+                        @else
+                            @if(!empty(Auth::user()->patient) && Auth::user()->patient->is_active)
+                                <form class="form-inline d-inline" method="POST" action="{{ route('connect.therapist', $therapist->id) }}">
+                                    @method('post')
+                                    @csrf
+                                    <input class="btn btn-dark d-inline float-right" type="submit" value="{{ __('messages.connect_therapist') }}">
+                                </form>
+                            @endif
+                        @endif
+                        {{-- if patient is or was connected with therapist(no matter what connection status is now) --}}
+                        @if($isPatient)
+                            <a class="btn btn-outline-dark d-inline float-right mr-2" href="{{ route('review.create', $therapist->id) }}">{{ __('messages.leave_review') }}</a>
+                        @endif
+                    </div>
+                </div>
+            @endif
             <hr>
             <h4 class="d-inline">{{ __('messages.reviews') }}</h4>
             @if(!empty($reviews) && count($reviews))
@@ -95,9 +98,7 @@
                             <h6 class="card-subtitle mb-2 mt-2 text-muted">
                                 {{ DateTime::createFromFormat('Y-m-d', $review->date)->format('F j, Y')  }}
                             </h6>
-                            <p class="card-text">
-                                {{ $review->text }}
-                            </p>
+                            <p style="white-space: pre-wrap;" class="card-text">{{ $review->text }}</p>
                             @if(Auth::check() && (Auth::user()->isModerator() || (Auth::user()->isPatient() && Auth::user()->patient && Auth::user()->patient->id === $review->patient_id)))
                             <form class="form-inline d-inline" method="POST" onsubmit="return confirm(document.getElementById('review_delete_confirm').value.toString());" action="{{ route('review.delete', $review->id) }}">
                                 @method('post')
